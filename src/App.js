@@ -1,9 +1,10 @@
+/* global BigInt */
+
 import './App.css';
 import SignUp from "./components/SignUp/SignUp.tsx";
 import SignIn from "./components/SignIn/SignIn.tsx";
 import Pending from "./components/Pending/Pending.tsx";
-
-import Web3Modal from 'web3modal'
+import GetAllowance from "./helpers/Allowance"
 import {Web3Context} from "./helpers/context.tsx"
 import {ToastContainer} from 'react-toastify';
 import LoadingModal from "./components/LoadingModal/LoadingModal.tsx";
@@ -12,6 +13,12 @@ import Web3 from "web3";
 import 'react-toastify/dist/ReactToastify.css';
 import Navigation from "./components/Navigation/Navigation";
 import Approved from "./components/Approved/Approved";
+import {Copyright} from "./components/Copyright/Copyright";
+import * as React from "react";
+import {GetBalances} from "./helpers/Balances";
+import header from "./assets/pfnheader.png";
+import Container from "@mui/material/Container";
+import {ThemeProvider} from "@mui/material/styles";
 
 function App() {
 
@@ -26,6 +33,13 @@ function App() {
   const [status, setStatus] = useState("")
   const [page, setPage] = useState("signIn")
   const [_disconnect, setDisconnect] = useState(false)
+  // eslint-disable-next-line no-undef
+  const [balances, setBalances] = useState({
+    avax: BigInt(0),
+    pfn: BigInt(0),
+    fuji_wavax: BigInt(0),
+    pfn_wavax: BigInt(0)
+  })
 
 
   const [refreshTimer, setRefreshTimer] = useState(null)
@@ -33,14 +47,19 @@ function App() {
   useEffect(() => {
   }, [_disconnect])
 
+  const updateBalances = async () => {
+    let _balances = await GetBalances(account)
+    setBalances(_balances)
+    console.log(_balances)
+  }
+
   const refreshData = async () => {
-    if (!provider  || !account) {
+    if (!provider || !account) {
       setStatus("")
       return
     }
 
-    // if (_disconnect)
-    //   return
+    await updateBalances()
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -65,7 +84,7 @@ function App() {
 
       setWeb3Data()
       provider.on("accountsChanged", (accounts) => {
-          disconnect()
+        disconnect()
         setDisconnect(true)
         setStatus("")
 
@@ -83,7 +102,6 @@ function App() {
   }, [provider])
 
   useEffect(() => {
-    console.log(provider, account, status, page)
     if (provider && account && web3 && !ready) {
       setConnecting(false)
       setReady(true)
@@ -95,19 +113,16 @@ function App() {
 
   const setWeb3Data = async () => {
     let _web3 = await new Web3(provider);
-    let chainID = await _web3.eth.getChainId()
-    if (window.ethereum != undefined) {
-      chainID =  Number(window.ethereum.chainId)
-    }
-    setCurrentChainID(chainID)
+    // let chainID = await _web3.eth.getChainId()
+    // if (window.ethereum != undefined) {
+    //   chainID = Number(window.ethereum.chainId)
+    // }
+    // setCurrentChainID(chainID)
     setLoadingMessage("Loading account")
     let _account = await _web3.eth.getAccounts();
-    console.log(_account)
-
 
     setAccount(_account[0])
     setWeb3(_web3)
-
 
     await refreshData()
 
@@ -131,7 +146,7 @@ function App() {
 
   return (
     <div className="App">
-      <Web3Context.Provider value={{web3, provider, account, refreshData}}>
+      <Web3Context.Provider value={{web3, provider, account, refreshData, updateBalances, GetAllowance}}>
         <ToastContainer
           position="top-center"
           autoClose={2500}
@@ -144,37 +159,45 @@ function App() {
           pauseOnHover
         />
         {status == "" || status == "denied" || _disconnect ?
-        <div>
+          <div>
+            <div style={{borderRadius: "0.25px"}}>
+              <Container component="main" maxWidth="xs">
+                <img width={"100%"} src={header}/>
 
-          {page == "signIn" &&
-          <SignIn account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
-                  connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
-                  setStatus={setStatus} setDisconnect={setDisconnect}/>
-          }
-          {page == "signUp" &&
-          <SignUp account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
-                  connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
-                  setStatus={setStatus} setDisconnect={setDisconnect}/>
-          }
+              </Container>
 
-        </div>
+            </div>
+            {page == "signIn" &&
+            <SignIn account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
+                    connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
+                    setStatus={setStatus} setDisconnect={setDisconnect}/>
+            }
+            {page == "signUp" &&
+            <SignUp account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
+                    connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
+                    setStatus={setStatus} setDisconnect={setDisconnect}/>
+            }
+
+          </div>
           :
           <div>
-            <Navigation account={account} disconnect={disconnect} />
+            <Navigation account={account} disconnect={disconnect} balances={balances}/>
             {status == "pending" ?
-            <div>
-              <Pending setShowLoadingModal={setShowLoadingModal} />
-            </div>
-            :
+              <div>
+                <Pending setShowLoadingModal={setShowLoadingModal}/>
+              </div>
+              :
               <div>
                 <Approved account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
-                          connecting={connecting} chainID={currentChainID} setStatus={setStatus} />
+                          connecting={connecting} chainID={currentChainID} setStatus={setStatus} balances={balances}/>
               </div>
             }
           </div>
         }
 
         {showLoadingModal && <LoadingModal/>}
+        <Copyright sx={{mt: 5}}/>
+
       </Web3Context.Provider>
 
     </div>

@@ -58,33 +58,36 @@ export default function SignIn(props: any) {
                     wallet_address: acc.toLowerCase(),
                 })
         };
+        console.log(acc)
 
-        let checkStatus = new Promise(async (ok: any, reject: any) => {
+        // let checkStatus = new Promise(async (ok: any, reject: any) => {
             fetch('http://localhost:8080/status', requestOptions)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     if (data.status == "nonExist") {
                         props.setPage("signUp")
+                        // reject(false)
                         return
                     }
+                    // ok(true)
                     props.setStatus(data.status)
                     props.setDisconnect(false)
-                    ok(true)
                 }).catch((err) => {
-                reject(false)
+                // reject(false)
                 props.setPage("signUp")
                 console.log(err)
                 return false
             });
-        })
-        await toast.promise(
-            checkStatus,
-            {
-                success: 'Signed In',
-                pending: 'Checking if your account is approved',
-                error: 'Account does not exist'
-            }
-        )
+        // })
+        // await toast.promise(
+        //     checkStatus,
+        //     {
+        //         success: 'Signed In',
+        //         pending: 'Checking if your account is approved',
+        //         error: 'Account does not exist'
+        //     }
+        // )
 
     };
 
@@ -136,27 +139,31 @@ export default function SignIn(props: any) {
                         />
                       </div>
                     </div>}
+                    {!props.account &&
 
-                    <Box style={{marginTop: 0, paddingTop: 0}} component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
-                            style={{backgroundColor: "#E55021"}}
-                        >
-                            Sign In
-                        </Button>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item>
-                                <Link onClick={() => props.setPage("signUp")} href="#" variant="body2">
-                                    Don't have an account? Sign up
-                                </Link>
-                            </Grid>
+                    <Box style={{marginTop: 0, paddingTop: 0}} component="form" noValidate onSubmit={handleSubmit}
+                         sx={{mt: 3}}>
+                      <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{mt: 3, mb: 2}}
+                        style={{backgroundColor: "#E55021"}}
+                      >
+                        Sign In
+                      </Button>
+
+
+                      <Grid container justifyContent="flex-end">
+                        <Grid item>
+                          <Link onClick={() => props.setPage("signUp")} href="#" variant="body2">
+                            Don't have an account? Sign up
+                          </Link>
                         </Grid>
+                      </Grid>
                     </Box>
+                    }
                 </Box>
-                <Copyright sx={{mt: 5}}/>
             </Container>
         </ThemeProvider>
     );

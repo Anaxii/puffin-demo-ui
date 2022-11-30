@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {toast} from "react-toastify";
-
+import header from "../../assets/pfnheader.png"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,6 +18,7 @@ import Web3Modal from 'web3modal'
 import TextField from "@mui/material/TextField";
 import {AddNetwork} from "../../util/AddNetwork";
 import Bridge from "../Bridge/Bridge";
+import WrapAvax from "../WrapAvax/WrapAvax";
 const theme = createTheme();
 
 export default function Approved(props: any) {
@@ -53,7 +54,10 @@ export default function Approved(props: any) {
                     <Typography component="h1" variant="h5">
                         Welcome to Puffin
                     </Typography>
-                    <Bridge />
+                    <Bridge account={props.account} balances={props.balances} />
+                    <div style={{margin: "2.5%"}}/>
+                    <WrapAvax account={props.account} balances={props.balances} />
+                    {props.account}
                     <Grid container spacing={2}>
                         <Grid item xs={6} >
                             <Button
