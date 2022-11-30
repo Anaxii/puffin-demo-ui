@@ -61,7 +61,7 @@ export default function SignIn(props: any) {
         console.log(acc)
 
         // let checkStatus = new Promise(async (ok: any, reject: any) => {
-            fetch('http://localhost:8080/status', requestOptions)
+            fetch('https://kyc-testnet.thepuffin.network/status', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)

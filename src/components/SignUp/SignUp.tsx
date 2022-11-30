@@ -80,7 +80,7 @@ export default function SignUp(props: any) {
         };
         await connectWallet(true)
         let checkStatus = new Promise(async (ok: any, reject: any) => {
-            fetch('http://localhost:8080/verify', requestOptions)
+            fetch('https://kyc-testnet.thepuffin.network/verify', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     ok()

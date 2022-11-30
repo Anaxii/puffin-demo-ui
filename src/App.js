@@ -68,7 +68,7 @@ function App() {
           wallet_address: account.toLowerCase(),
         })
     };
-    fetch('http://localhost:8080/status', requestOptions)
+    fetch('https://kyc-testnet.thepuffin.network/status', requestOptions)
       .then(response => response.json())
       .then(data => {
         setStatus(data.status)
