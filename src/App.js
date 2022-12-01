@@ -19,6 +19,7 @@ import {GetBalances} from "./helpers/Balances";
 import header from "./assets/pfnheader.png";
 import Container from "@mui/material/Container";
 import {ThemeProvider} from "@mui/material/styles";
+import {KYC_URL} from "./constants/Global";
 
 function App() {
 
@@ -59,6 +60,9 @@ function App() {
       return
     }
 
+    if (!_disconnect && status != "")
+      return
+
     await updateBalances()
     const requestOptions = {
       method: 'POST',
@@ -68,7 +72,7 @@ function App() {
           wallet_address: account.toLowerCase(),
         })
     };
-    fetch('https://kyc-testnet.thepuffin.network/status', requestOptions)
+    fetch(KYC_URL + '/status', requestOptions)
       .then(response => response.json())
       .then(data => {
         setStatus(data.status)
@@ -83,12 +87,12 @@ function App() {
     if (provider) {
 
       setWeb3Data()
-      provider.on("accountsChanged", (accounts) => {
-        disconnect()
-        setDisconnect(true)
-        setStatus("")
-
-      });
+      // provider.on("accountsChanged", (accounts) => {
+      //   disconnect()
+      //   setDisconnect(true)
+      //   setStatus("")
+      //
+      // });
       // provider.on("chainChanged", async (chainId) => {
       //   setCurrentChainID(parseInt(chainId))
       //   setWeb3Data()
