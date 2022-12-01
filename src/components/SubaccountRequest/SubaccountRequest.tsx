@@ -94,7 +94,7 @@ export default function SubAccountRequest(props: any) {
             checkStatus,
             {
                 success: 'Subaccount request received, please wait up to 5 minutes for approval',
-                pending: 'Sending KYC request',
+                pending: 'Sending & verifying subnet request',
                 error: 'Could not connect to server, try again later.'
             }
         )
@@ -155,7 +155,7 @@ export default function SubAccountRequest(props: any) {
                                     disabled
                                     fullWidth
                                     name="parent_address"
-                                    label={parentSignature.signature ? parentSignature.signature : "Parent Wallet Address"}
+                                    label={parentSignature.walletAddress ? parentSignature.walletAddress : "Parent Wallet Address"}
                                     type="parent_address"
                                     id="signature"
                                 />
@@ -193,7 +193,7 @@ export default function SubAccountRequest(props: any) {
                                     disabled
                                     fullWidth
                                     name="subaccount_address"
-                                    label={subaccountSignature.signature ? subaccountSignature.signature : "Sub-Account Wallet Address"}
+                                    label={subaccountSignature.walletAddress ? subaccountSignature.walletAddress : "Sub-Account Wallet Address"}
                                     type="subaccount_address"
                                     id="signature"
                                 />
