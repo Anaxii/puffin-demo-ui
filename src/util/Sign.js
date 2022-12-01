@@ -21,7 +21,7 @@ export async function Sign() {
   const s = "0x" + signature.slice(66, 130);
   const v = parseInt(signature.slice(130, 132), 16);
 
-  return {signature, r, s, v, hashedMessage}
+  return {signature, r, s, v, hashedMessage, walletAddress: accounts[0]}
 
 
 }

@@ -43,7 +43,6 @@ export default function Navigation(props: any) {
                 style={{backgroundColor: "#E55021"}}
                 onClick={
                     () => {
-                        console.log("test")
                         props.disconnect()
                     }}
             >

@@ -34,7 +34,6 @@ function App() {
   const [status, setStatus] = useState("")
   const [page, setPage] = useState("signIn")
   const [_disconnect, setDisconnect] = useState(false)
-  // eslint-disable-next-line no-undef
   const [balances, setBalances] = useState({
     avax: BigInt(0),
     pfn: BigInt(0),
@@ -51,7 +50,6 @@ function App() {
   const updateBalances = async () => {
     let _balances = await GetBalances(account)
     setBalances(_balances)
-    console.log(_balances)
   }
 
   const refreshData = async () => {
@@ -75,6 +73,9 @@ function App() {
     fetch(KYC_URL + '/status', requestOptions)
       .then(response => response.json())
       .then(data => {
+        if (data.status == "nonExist") {
+          setPage("signUp")
+        }
         setStatus(data.status)
       }).catch((err) => {
       console.log(err)
@@ -97,11 +98,11 @@ function App() {
       //   setCurrentChainID(parseInt(chainId))
       //   setWeb3Data()
       // });
-      provider.on("accountsChanged", (accounts) => {
-        console.log("account changed")
-        setShowLoadingModal(true)
-        setWeb3Data()
-      });
+      // provider.on("accountsChanged", (accounts) => {
+      //   console.log("account changed")
+      //   setShowLoadingModal(true)
+      //   setWeb3Data()
+      // });
     }
   }, [provider])
 
@@ -162,7 +163,7 @@ function App() {
           draggable
           pauseOnHover
         />
-        {status == "" || status == "denied" || _disconnect ?
+        {status == "" || status == "denied" || status == "nonExist" || _disconnect ?
           <div>
             <div style={{borderRadius: "0.25px"}}>
               <Container component="main" maxWidth="xs">

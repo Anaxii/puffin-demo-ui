@@ -19,6 +19,7 @@ import TextField from "@mui/material/TextField";
 import {AddNetwork} from "../../util/AddNetwork";
 import Bridge from "../Bridge/Bridge";
 import WrapAvax from "../WrapAvax/WrapAvax";
+import SubAccountRequest from "../SubaccountRequest/SubaccountRequest";
 const theme = createTheme();
 
 export default function Approved(props: any) {
@@ -57,6 +58,7 @@ export default function Approved(props: any) {
                     <Bridge account={props.account} balances={props.balances} />
                     <div style={{margin: "2.5%"}}/>
                     <WrapAvax account={props.account} balances={props.balances} />
+                    <SubAccountRequest account={props.account} balances={props.balances} />
                     {props.account}
                     <Grid container spacing={2}>
                         <Grid item xs={6} >

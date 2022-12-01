@@ -59,13 +59,11 @@ export default function SignIn(props: any) {
                     wallet_address: acc.toLowerCase(),
                 })
         };
-        console.log(acc)
 
         // let checkStatus = new Promise(async (ok: any, reject: any) => {
             fetch(KYC_URL + '/status', requestOptions)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
                     if (data.status == "nonExist") {
                         props.setPage("signUp")
                         // reject(false)
@@ -77,7 +75,6 @@ export default function SignIn(props: any) {
                 }).catch((err) => {
                 // reject(false)
                 props.setPage("signUp")
-                console.log(err)
                 return false
             });
         // })

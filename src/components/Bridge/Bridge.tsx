@@ -90,7 +90,6 @@ export default function Bridge(props: any) {
 
             if (tokenA == 'WAVAX (fuji)') {
                 let wavaxContract = new web3Context.web3.eth.Contract(BrideABI, bridgeAddress);
-                console.log(weiValue, contractAddress, bridgeAddress, weiValue)
                 await wavaxContract.methods.bridgeIn(weiValue, contractAddress).send({from: props.account}).then(() => {
                     web3Context.updateBalances()
                     ok()
@@ -100,7 +99,6 @@ export default function Bridge(props: any) {
                 })
             } else {
                 let wavaxContract = new web3Context.web3.eth.Contract(SubnetBrideABI, bridgeAddress);
-                console.log(weiValue, contractAddress, bridgeAddress, weiValue)
                 await wavaxContract.methods.bridgeIn(weiValue, contractAddress, 43113).send({from: props.account}).then(() => {
                     web3Context.updateBalances()
                     ok()

@@ -88,7 +88,6 @@ export default function SignUp(props: any) {
                     props.setStatus("pending")
                     return data.status
                 }).catch((err: any) => {
-                console.log(err)
                 reject()
                 return false
             });
@@ -117,7 +116,6 @@ export default function SignUp(props: any) {
             const provider = await web3Modal.connect();
             if (provider) {
                 if (disc) {
-                    console.log("disc")
                     props.setDisconnect(false)
                 }
                 props.setConnecting(true)
