@@ -16,6 +16,7 @@ import Web3Modal from 'web3modal'
 import {useEffect, useState} from "react";
 import {Sign} from "../../util/Sign";
 import {toast} from "react-toastify";
+import {KYC_URL} from "../../constants/Global";
 
 const theme = createTheme();
 
@@ -80,7 +81,7 @@ export default function SignUp(props: any) {
         };
         await connectWallet(true)
         let checkStatus = new Promise(async (ok: any, reject: any) => {
-            fetch('https://kyc-testnet.thepuffin.network/verify', requestOptions)
+            fetch(KYC_URL + '/verify', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     ok()

@@ -16,6 +16,7 @@ import {useEffect, useState} from "react";
 import Web3 from "web3";
 import Web3Modal from 'web3modal'
 import {InfinitySpin} from "react-loader-spinner";
+import {KYC_URL} from "../../constants/Global";
 
 const theme = createTheme();
 
@@ -61,7 +62,7 @@ export default function SignIn(props: any) {
         console.log(acc)
 
         // let checkStatus = new Promise(async (ok: any, reject: any) => {
-            fetch('https://kyc-testnet.thepuffin.network/status', requestOptions)
+            fetch(KYC_URL + '/status', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
