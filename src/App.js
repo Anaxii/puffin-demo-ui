@@ -18,7 +18,6 @@ import * as React from "react";
 import {GetBalances} from "./helpers/Balances";
 import header from "./assets/pfnheader.png";
 import Container from "@mui/material/Container";
-import {ThemeProvider} from "@mui/material/styles";
 import {KYC_URL} from "./constants/Global";
 
 function App() {
@@ -44,24 +43,21 @@ function App() {
 
   const [refreshTimer, setRefreshTimer] = useState(null)
 
-  useEffect(() => {
-  }, [_disconnect])
-
   const updateBalances = async () => {
     let _balances = await GetBalances(account)
     setBalances(_balances)
   }
 
   const refreshData = async () => {
-    if (!provider || !account) {
-      setStatus("")
-      return
+    if (!account) {
+      // setStatus("")
     }
 
     if (!_disconnect && status != "")
       return
 
-    await updateBalances()
+    if (account && provider && web3)
+      await updateBalances()
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -70,12 +66,17 @@ function App() {
           wallet_address: account.toLowerCase(),
         })
     };
+
+    if (!account.toLowerCase())
+      return
+
     fetch(KYC_URL + '/status', requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.status == "nonExist") {
           setPage("signUp")
         }
+        console.log(data.status, status)
         setStatus(data.status)
       }).catch((err) => {
       console.log(err)
@@ -84,16 +85,27 @@ function App() {
 
   }
 
+  async function setWindowAccount() {
+    const accounts = await window?.ethereum?.request({method: "eth_requestAccounts"});
+
+    if (accounts.length > 0)
+      setAccount(accounts[0])
+  }
+
   useEffect(() => {
+    if (!account) {
+      // setWindowAccount()
+    }
     if (provider) {
 
+
+
+
       setWeb3Data()
-      // provider.on("accountsChanged", (accounts) => {
-      //   disconnect()
-      //   setDisconnect(true)
-      //   setStatus("")
-      //
-      // });
+      provider.on("accountsChanged", (accounts) => {
+        refreshData()
+        setWeb3Data()
+      });
       // provider.on("chainChanged", async (chainId) => {
       //   setCurrentChainID(parseInt(chainId))
       //   setWeb3Data()
@@ -107,42 +119,37 @@ function App() {
   }, [provider])
 
   useEffect(() => {
-    if (provider && account && web3 && !ready) {
-      setConnecting(false)
+    if (provider) {
       setReady(true)
       refreshData()
 
-      setRefreshTimer(setInterval(refreshData, 10000))
+      const timer = window.setInterval(() => {
+        refreshData()// <-- Change this line!
+      }, 10000);
+      return () => {
+        window.clearInterval(timer);
+      };
     }
   }, [account, provider, web3])
 
   const setWeb3Data = async () => {
+    if (!provider)
+      return
     let _web3 = await new Web3(provider);
-    // let chainID = await _web3.eth.getChainId()
-    // if (window.ethereum != undefined) {
-    //   chainID = Number(window.ethereum.chainId)
-    // }
-    // setCurrentChainID(chainID)
-    setLoadingMessage("Loading account")
     let _account = await _web3.eth.getAccounts();
+
+    console.log("test")
 
     setAccount(_account[0])
     setWeb3(_web3)
 
     await refreshData()
-
-    setShowLoadingModal(false)
   }
 
   const disconnect = async () => {
     localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER")
     setDisconnect(true)
-    clearInterval(refreshTimer)
     setProvider(null)
-    resetData()
-  }
-
-  const resetData = () => {
     setWeb3(null)
     setStatus("")
     setAccount("")
@@ -175,7 +182,7 @@ function App() {
             {page == "signIn" &&
             <SignIn account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
                     connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
-                    setStatus={setStatus} setDisconnect={setDisconnect}/>
+                    setStatus={setStatus} setDisconnect={setDisconnect} setWeb3Data={setWeb3Data}/>
             }
             {page == "signUp" &&
             <SignUp account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}

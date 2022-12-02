@@ -39,31 +39,38 @@ export default function SignIn(props: any) {
 
         // @ts-ignore
         setWeb3Modal(newWeb3Modal)
+
     }, [])
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const submit = async () => {
         await connectWallet()
+        handleSubmit()
+    }
 
-        let acc = props.account
-        if (!props.account) {
-            const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-            acc = accounts[0]
-        }
+    const handleSubmit = async () => {
+
+        // let acc = props.account
+        // if (!props.account) {
+        //     const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+        //     acc = accounts[0]
+        // }
+
+        if (!props.account)
+            return
 
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(
                 {
-                    wallet_address: acc.toLowerCase(),
+                    wallet_address: props.account.toLowerCase(),
                 })
         };
 
-        // let checkStatus = new Promise(async (ok: any, reject: any) => {
             fetch(KYC_URL + '/status', requestOptions)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data)
                     if (data.status == "nonExist") {
                         props.setPage("signUp")
                         // reject(false)
@@ -74,18 +81,10 @@ export default function SignIn(props: any) {
                     props.setDisconnect(false)
                 }).catch((err) => {
                 // reject(false)
+                console.log(err)
                 props.setPage("signUp")
                 return false
             });
-        // })
-        // await toast.promise(
-        //     checkStatus,
-        //     {
-        //         success: 'Signed In',
-        //         pending: 'Checking if your account is approved',
-        //         error: 'Account does not exist'
-        //     }
-        // )
 
     };
 
@@ -94,17 +93,19 @@ export default function SignIn(props: any) {
         if (web3Modal && web3Modal.cachedProvider) {
             connectWallet()
         }
-    }, [web3Modal])
+        if (Web3Modal && props.account) {
+            handleSubmit()
+        }
+    }, [web3Modal, props.account])
 
     async function connectWallet() {
         // @ts-ignore
         const provider = await web3Modal.connect();
         if (provider) {
-            props.setDisconnect(false)
-            props.setConnecting(true)
             let w3 = await new Web3(provider)
             props.setWeb3(w3)
             props.setProvider(provider)
+            props.setWeb3Data()
             return {provider, w3: w3}
         }
         return {}
@@ -137,16 +138,16 @@ export default function SignIn(props: any) {
                         />
                       </div>
                     </div>}
-                    {!props.account &&
+                    {!props.account ?
 
-                    <Box style={{marginTop: 0, paddingTop: 0}} component="form" noValidate onSubmit={handleSubmit}
+                    <Box style={{marginTop: 0, paddingTop: 0}} component="form" noValidate onSubmit={submit}
                          sx={{mt: 3}}>
                       <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         sx={{mt: 3, mb: 2}}
                         style={{backgroundColor: "#E55021"}}
+                        onClick={() => {submit()}}
                       >
                         Sign In
                       </Button>
@@ -160,6 +161,10 @@ export default function SignIn(props: any) {
                         </Grid>
                       </Grid>
                     </Box>
+                    :
+                        <Link onClick={() => props.setPage("signUp")} href="#" variant="body2">
+                            Don't have an account? Sign up
+                        </Link>
                     }
                 </Box>
             </Container>
