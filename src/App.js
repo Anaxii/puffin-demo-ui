@@ -53,7 +53,7 @@ function App() {
       // setStatus("")
     }
 
-    if (!_disconnect && status != "")
+    if ((!_disconnect && status != "") || status == "pending" || status == "approved")
       return
 
     if (account && provider && web3)
@@ -76,7 +76,6 @@ function App() {
         if (data.status == "nonExist") {
           setPage("signUp")
         }
-        console.log(data.status, status)
         setStatus(data.status)
       }).catch((err) => {
       console.log(err)
@@ -137,8 +136,6 @@ function App() {
       return
     let _web3 = await new Web3(provider);
     let _account = await _web3.eth.getAccounts();
-
-    console.log("test")
 
     setAccount(_account[0])
     setWeb3(_web3)
