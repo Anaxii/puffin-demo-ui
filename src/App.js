@@ -19,6 +19,7 @@ import {GetBalances} from "./helpers/Balances";
 import header from "./assets/pfnheader.png";
 import Container from "@mui/material/Container";
 import {KYC_URL} from "./constants/Global";
+import {GetDomain} from "./helpers/domain";
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
   const [status, setStatus] = useState("")
   const [page, setPage] = useState("signIn")
   const [_disconnect, setDisconnect] = useState(false)
+  const [name, setName] = useState("")
   const [balances, setBalances] = useState({
     avax: BigInt(0),
     pfn: BigInt(0),
@@ -44,6 +46,8 @@ function App() {
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const updateBalances = async () => {
+    let _name = await GetDomain(account)
+    setName(_name)
     let _balances = await GetBalances(account)
     setBalances(_balances)
   }
@@ -195,7 +199,7 @@ function App() {
               </div>
               :
               <div>
-                <Approved account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
+                <Approved name={name} account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
                           connecting={connecting} chainID={currentChainID} setStatus={setStatus} balances={balances}/>
               </div>
             }

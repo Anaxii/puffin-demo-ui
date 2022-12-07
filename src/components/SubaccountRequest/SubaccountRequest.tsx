@@ -1,18 +1,10 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {Copyright} from "../Copyright/Copyright";
-import Web3 from "web3";
-import Web3Modal from 'web3modal'
 import {useEffect, useState} from "react";
 import {Sign} from "../../util/Sign";
 import {toast} from "react-toastify";
@@ -22,7 +14,6 @@ const theme = createTheme();
 
 export default function SubAccountRequest(props: any) {
 
-    const [web3Modal, setWeb3Modal] = useState(null)
     const [parentSignature, setParentSignature] = useState({
         signature: "",
         r: "",

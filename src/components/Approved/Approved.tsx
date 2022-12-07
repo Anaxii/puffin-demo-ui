@@ -53,7 +53,7 @@ export default function Approved(props: any) {
                     }}
                 >
                     <Typography component="h1" variant="h5">
-                        Welcome to Puffin
+                        {props.name == "" ? "Welcome to Puffin" : `Welcome back ${props.name}`}
                     </Typography>
                     <Bridge account={props.account} balances={props.balances} />
                     <div style={{margin: "2.5%"}}/>
