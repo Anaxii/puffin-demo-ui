@@ -1,6 +1,15 @@
 const Web3 = require('web3');
 const ERC20 = require("../abi/IERC20.json")
 export async function GetBalances(walletAddress :string) {
+    console.log(walletAddress)
+    if (walletAddress == "") {
+        const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
+        walletAddress = accounts[0]
+    }
+
+    if (!walletAddress)
+        return {avax: BigInt(0), pfn: BigInt(0), fuji_wavax: BigInt(0), pfn_wavax: BigInt(0)}
+
     const avaxWeb3 = new Web3(new Web3.providers.HttpProvider(
         "https://node.thepuffin.network/ext/bc/C/rpc"
     ));

@@ -109,11 +109,9 @@ function App() {
       //   setCurrentChainID(parseInt(chainId))
       //   setWeb3Data()
       // });
-      // provider.on("accountsChanged", (accounts) => {
-      //   console.log("account changed")
-      //   setShowLoadingModal(true)
-      //   setWeb3Data()
-      // });
+      provider.on("accountsChanged", async (accounts) => {
+        updateBalances()
+      });
     }
   }, [provider])
 
