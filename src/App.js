@@ -19,7 +19,7 @@ import {GetBalances} from "./helpers/Balances";
 import header from "./assets/pfnheader.png";
 import Container from "@mui/material/Container";
 import {KYC_URL} from "./constants/Global";
-import {GetDomain} from "./helpers/domain";
+import {GetDomain, GetDomains} from "./helpers/domain";
 
 function App() {
 
@@ -35,6 +35,7 @@ function App() {
   const [page, setPage] = useState("signIn")
   const [_disconnect, setDisconnect] = useState(false)
   const [name, setName] = useState("")
+  const [domains, setDomains] = useState([])
   const [balances, setBalances] = useState({
     avax: BigInt(0),
     pfn: BigInt(0),
@@ -46,6 +47,8 @@ function App() {
   const [refreshTimer, setRefreshTimer] = useState(null)
 
   const updateBalances = async () => {
+    let _domains = await GetDomains(account)
+    setDomains(_domains)
     let _name = await GetDomain(account)
     setName(_name)
     let _balances = await GetBalances(account)
@@ -86,13 +89,6 @@ function App() {
       return false
     });
 
-  }
-
-  async function setWindowAccount() {
-    const accounts = await window?.ethereum?.request({method: "eth_requestAccounts"});
-
-    if (accounts.length > 0)
-      setAccount(accounts[0])
   }
 
   useEffect(() => {
@@ -157,7 +153,7 @@ function App() {
 
   return (
     <div className="App">
-      <Web3Context.Provider value={{web3, provider, account, refreshData, updateBalances, GetAllowance}}>
+      <Web3Context.Provider value={{web3, provider, account, refreshData, updateBalances, domains, GetAllowance}}>
         <ToastContainer
           position="top-center"
           autoClose={2500}

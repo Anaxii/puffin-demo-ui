@@ -1,7 +1,6 @@
 const Web3 = require('web3');
 const ERC20 = require("../abi/IERC20.json")
 export async function GetBalances(walletAddress :string) {
-    console.log(walletAddress)
     if (walletAddress == "") {
         const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
         walletAddress = accounts[0]

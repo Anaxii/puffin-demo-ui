@@ -549,6 +549,30 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "itemId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "subDomainId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getSubDomain",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "_domain",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "owner",
         "type": "address"

@@ -20,6 +20,7 @@ import {AddNetwork} from "../../util/AddNetwork";
 import Bridge from "../Bridge/Bridge";
 import WrapAvax from "../WrapAvax/WrapAvax";
 import SubAccountRequest from "../SubaccountRequest/SubaccountRequest";
+import NameService from "../NameService/NameService";
 const theme = createTheme();
 
 export default function Approved(props: any) {
@@ -86,6 +87,8 @@ export default function Approved(props: any) {
                             </Button>
                         </Grid>
                     </Grid>
+                    <NameService account={props.account} balances={props.balances} name={props.name} />
+
                 </Box>
             </Container>
         </ThemeProvider>
