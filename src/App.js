@@ -112,13 +112,12 @@ function App() {
     }
   }, [provider])
 
+
   useEffect(() => {
     if (provider) {
-      setReady(true)
       refreshData()
-
       const timer = window.setInterval(() => {
-        refreshData()// <-- Change this line!
+        refreshData()
       }, 10000);
       return () => {
         window.clearInterval(timer);

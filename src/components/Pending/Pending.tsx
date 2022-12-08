@@ -51,6 +51,10 @@ export default function Pending(props: any) {
     }
 
     useEffect(() => {
+        props.setStatus("pending")
+    }, [])
+
+    useEffect(() => {
         let _interval = setInterval(async () => {
             let is: boolean = await whilePending()
             if (is) {

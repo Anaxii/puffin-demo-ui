@@ -87,7 +87,7 @@ export default function SignUp(props: any) {
                     ok()
                     props.setStatus("pending")
                     props.setDisconnect(false)
-                    return data.status
+                    // return data.status
                 }).catch((err: any) => {
                 reject()
                 return false
@@ -110,6 +110,10 @@ export default function SignUp(props: any) {
             connectWallet(false)
         }
     }, [web3Modal])
+
+    useEffect(() => {
+        props.setStatus("")
+    }, [])
 
     async function connectWallet(disc: boolean) {
         return new Promise(async (ok: any) => {

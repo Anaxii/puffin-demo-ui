@@ -46,6 +46,9 @@ export default function SignIn(props: any) {
         await connectWallet()
         handleSubmit()
     }
+    useEffect(() => {
+        props.setStatus("")
+    }, [])
 
     const handleSubmit = async () => {
 
