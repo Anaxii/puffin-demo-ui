@@ -86,6 +86,7 @@ export default function SignUp(props: any) {
                 .then(data => {
                     ok()
                     props.setStatus("pending")
+                    props.setDisconnect(false)
                     return data.status
                 }).catch((err: any) => {
                 reject()

@@ -74,6 +74,7 @@ export default function NameService(props: any) {
             }
         )
     };
+
     async function newName(_type: string) {
         await AddNetwork("pfn")
         let nameArray = name.split(".")
@@ -186,16 +187,18 @@ export default function NameService(props: any) {
                                 <Grid item xs={4}>
                                     <Box textAlign='center'>
 
-                                            <Button
-                                                fullWidth
-                                                variant="contained"
-                                                id={"set_domain_to_" + item?.domainName}
-                                                sx={{mt: 1, mb: 1}}
-                                                style={{backgroundColor: "#E55021"}}
-                                                onClick={() => {changeName(item?.domainName)}}
-                                            >
-                                                Set
-                                            </Button>
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            id={"set_domain_to_" + item?.domainName}
+                                            sx={{mt: 1, mb: 1}}
+                                            style={{backgroundColor: "#E55021"}}
+                                            onClick={() => {
+                                                changeName(item?.domainName)
+                                            }}
+                                        >
+                                            Set
+                                        </Button>
                                     </Box>
                                 </Grid>
                                 {item.subaccounts.map((subaccount: any) => {
@@ -209,20 +212,23 @@ export default function NameService(props: any) {
                                             <Grid item xs={4}>
                                                 <Box textAlign='center'>
 
-                                                        <Button
-                                                            fullWidth
-                                                            variant="contained"
-                                                            id={"set_subaccount_name_" + subaccount?.name}
-                                                            sx={{mt: 1, mb: 1}}
-                                                            style={{backgroundColor: "#E55021"}}
-                                                            onClick={() => {changeName(subaccount?.name)}}
-                                                        >
-                                                            Set
-                                                        </Button>
+                                                    <Button
+                                                        fullWidth
+                                                        variant="contained"
+                                                        id={"set_subaccount_name_" + subaccount?.name}
+                                                        sx={{mt: 1, mb: 1}}
+                                                        style={{backgroundColor: "#E55021"}}
+                                                        onClick={() => {
+                                                            changeName(subaccount?.name)
+                                                        }}
+                                                    >
+                                                        Set
+                                                    </Button>
                                                 </Box>
                                             </Grid>
                                         </Grid>
-                                            )})}
+                                    )
+                                })}
                             </Grid>
                         )
                     })}

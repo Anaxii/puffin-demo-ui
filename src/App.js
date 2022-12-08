@@ -56,15 +56,16 @@ function App() {
   }
 
   const refreshData = async () => {
-    if (!account) {
-      // setStatus("")
-    }
-
-    if ((!_disconnect && status != "") || status == "pending" || status == "approved")
+    if (!account)
       return
 
     if (account && provider && web3)
       await updateBalances()
+
+    if ((!_disconnect && status != "")  || status == "approved")
+      return
+
+
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -85,7 +86,6 @@ function App() {
         }
         setStatus(data.status)
       }).catch((err) => {
-      console.log(err)
       return false
     });
 
@@ -96,9 +96,6 @@ function App() {
       // setWindowAccount()
     }
     if (provider) {
-
-
-
 
       setWeb3Data()
       provider.on("accountsChanged", (accounts) => {
@@ -191,7 +188,7 @@ function App() {
             <Navigation account={account} disconnect={disconnect} balances={balances}/>
             {status == "pending" ?
               <div>
-                <Pending setShowLoadingModal={setShowLoadingModal}/>
+                <Pending setStatus={setStatus} account={account} setShowLoadingModal={setShowLoadingModal}/>
               </div>
               :
               <div>

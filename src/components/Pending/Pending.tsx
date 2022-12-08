@@ -12,19 +12,52 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {Copyright} from "../Copyright/Copyright";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Web3 from "web3";
 import Web3Modal from 'web3modal'
 import TextField from "@mui/material/TextField";
 import {AddNetwork} from "../../util/AddNetwork";
+import {KYC_URL} from "../../constants/Global";
+import {clear} from "@testing-library/user-event/dist/clear";
+import {Web3Context} from "../../helpers/context";
 const theme = createTheme();
 
 export default function Pending(props: any) {
-
+    const web3Context: any = useContext(Web3Context);
     const [web3Modal, setWeb3Modal] = useState(null)
 
+    const whilePending = async (): Promise<any> => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(
+                {
+                    wallet_address: props.account.toLowerCase(),
+                })
+        };
+
+        if (!props.account.toLowerCase())
+            return false
+
+        fetch(KYC_URL + '/status', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                props.setStatus(data.status)
+                web3Context.updateBalances()
+                return true
+            }).catch((err) => {
+            return false
+        });
+    }
+
     useEffect(() => {
-        // @ts-ignore
+        let _interval = setInterval(async () => {
+            let is: boolean = await whilePending()
+            if (is) {
+                clearInterval(_interval)
+            }
+
+        }, 2500)
     }, [web3Modal])
 
     async function connectWallet() {
