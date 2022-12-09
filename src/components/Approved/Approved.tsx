@@ -52,7 +52,7 @@ export default function Approved(props: any) {
 
                     <div className={"color-primary"} style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={(props.status != "sub" ? 4 : 6)} >
+                            <Grid item xs={(props.status != "sub" ? 3 : 4)} >
                                 <p style={{cursor: "pointer", color: selected == "Bridge" ? "#E55021" : "black"}}
                                 onClick={() => {
                                     setSelected("Bridge")
@@ -61,7 +61,7 @@ export default function Approved(props: any) {
                                 </p>
                             </Grid>
                             {props.status != "sub" &&
-                            <Grid item xs={4} >
+                            <Grid item xs={3} >
                               <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
                                  onClick={() => {
                                      setSelected("Sub-Accounts")
@@ -71,12 +71,18 @@ export default function Approved(props: any) {
                             </Grid>
                             }
 
-                            <Grid item xs={(props.status != "sub" ? 4 : 6)} >
+                            <Grid item xs={(props.status != "sub" ? 3 : 4)} >
                                 <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}
                                 onClick={() => {
                                     setSelected("Name Service")
                                 }}>
                                     Name Service
+                                </p>
+                            </Grid>
+                            <Grid item xs={(props.status != "sub" ? 3 : 4)} >
+                                <p style={{cursor: "not-allowed", color: "gray"}}
+                                   >
+                                    dApp Directory
                                 </p>
                             </Grid>
                         </Grid>
