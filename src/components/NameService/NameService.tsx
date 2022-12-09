@@ -148,7 +148,7 @@ export default function NameService(props: any) {
                 <p>
                     PFN Name Service
                 </p>
-                <p>Current Name: {props.name}</p>
+                <p>{props.name && "Current Name: " + props.name}</p>
                 <Grid container spacing={2}>
                     <Grid item xs={8}>
                         <TextField
