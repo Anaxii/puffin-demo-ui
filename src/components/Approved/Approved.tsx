@@ -104,7 +104,7 @@ export default function Approved(props: any) {
                     </div>
                 </div>
             </AppBar>
-            <Container component="main" maxWidth="xs" style={{paddingTop: "5%", paddingBottom: "5%"}}>
+            <Container component="main" maxWidth="xs" style={{paddingTop: "5%"}}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -155,8 +155,6 @@ export default function Approved(props: any) {
                             </Button>
                         </Grid>
                     </Grid>
-
-
                 </Box>
             </Container>
         </ThemeProvider>
