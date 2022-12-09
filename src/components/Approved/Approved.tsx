@@ -26,6 +26,7 @@ export default function Approved(props: any) {
     }, [web3Modal])
 
     async function connectWallet() {
+        console.log(props.status)
         // @ts-ignore
         const provider = await web3Modal.connect();
         if (provider) {
@@ -51,7 +52,7 @@ export default function Approved(props: any) {
 
                     <div className={"color-primary"} style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={4} >
+                            <Grid item xs={(props.status != "sub" ? 4 : 6)} >
                                 <p style={{cursor: "pointer", color: selected == "Bridge" ? "#E55021" : "black"}}
                                 onClick={() => {
                                     setSelected("Bridge")
@@ -59,15 +60,18 @@ export default function Approved(props: any) {
                                     Bridge
                                 </p>
                             </Grid>
+                            {props.status != "sub" &&
                             <Grid item xs={4} >
-                                <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
-                                onClick={() => {
-                                    setSelected("Sub-Accounts")
-                                }}>
-                                    Sub-Accounts
-                                </p>
+                              <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
+                                 onClick={() => {
+                                     setSelected("Sub-Accounts")
+                                 }}>
+                                Sub-Accounts
+                              </p>
                             </Grid>
-                            <Grid item xs={4} >
+                            }
+
+                            <Grid item xs={(props.status != "sub" ? 4 : 6)} >
                                 <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}
                                 onClick={() => {
                                     setSelected("Name Service")

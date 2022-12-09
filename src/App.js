@@ -192,7 +192,7 @@ function App() {
               :
               <div>
                 <Approved disconnect={disconnect} name={name} account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
-                          connecting={connecting} chainID={currentChainID} setStatus={setStatus} balances={balances}/>
+                          connecting={connecting} chainID={currentChainID} status={status} setStatus={setStatus} balances={balances}/>
               </div>
             }
           </div>
