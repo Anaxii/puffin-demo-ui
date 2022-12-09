@@ -52,9 +52,9 @@ export default function Approved(props: any) {
 
                     <div className={"color-primary"} style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={(props.status != "sub" ? 1 : 0)} >
+                            <Grid item xs={(props.status != "sub" ? 1 : 2)} >
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 3)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
                                 <p style={{cursor: "pointer", color: selected == "Bridge" ? "#E55021" : "black"}}
                                 onClick={() => {
                                     setSelected("Bridge")
@@ -73,7 +73,7 @@ export default function Approved(props: any) {
                             </Grid>
                             }
 
-                            <Grid item xs={(props.status != "sub" ? 2 : 3)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
                                 <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}
                                 onClick={() => {
                                     setSelected("Name Service")
@@ -81,13 +81,13 @@ export default function Approved(props: any) {
                                     Name Service
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 3)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
                                 <p style={{cursor: "not-allowed", color: "gray"}}
                                    >
                                     dApp Directory
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 3)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
                                 <p style={{cursor: "not-allowed", color: "gray"}}
                                 >
                                     Settings
