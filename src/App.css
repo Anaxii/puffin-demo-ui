@@ -39,7 +39,7 @@
 
 .navigation {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
   text-align: left;
   margin-right: 5%;
   margin-left: 5%;
