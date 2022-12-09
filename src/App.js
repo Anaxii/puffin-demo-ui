@@ -184,14 +184,14 @@ function App() {
           </div>
           :
           <div>
-            <Navigation account={account} disconnect={disconnect} balances={balances}/>
+            <Navigation account={account} balances={balances}/>
             {status == "pending" ?
               <div>
                 <Pending setStatus={setStatus} account={account} setShowLoadingModal={setShowLoadingModal}/>
               </div>
               :
               <div>
-                <Approved name={name} account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
+                <Approved disconnect={disconnect} name={name} account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
                           connecting={connecting} chainID={currentChainID} setStatus={setStatus} balances={balances}/>
               </div>
             }

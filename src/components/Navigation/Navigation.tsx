@@ -13,7 +13,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import AppBar from "@mui/material/AppBar";
 export default function Navigation(props: any) {
-    const web3Context: any = useContext(Web3Context);
 
     function balances() {
         let msg = ""
@@ -30,38 +29,10 @@ export default function Navigation(props: any) {
         <AppBar position="fixed" style={{backgroundColor: "#01001A"}} sx={{ top: 'auto', bottom: 0 }}>
             <Toolbar>
                 <div style={{margin: "auto"}}>
-                    <p style={{margin: 0}}>{balances()}</p>
+                    <p style={{left: 0, right: 0}}>{balances()}</p>
                 </div>
             </Toolbar>
         </AppBar>
-        <div className={"logo-div"}>
-            <div className={"logo"}>
-                <img width={"55px"} src={logo}/>
 
-            </div>
-            <h2 className={"exposure-title"}>
-                Puffin KYC
-            </h2>
-        </div>
-
-        <div className={"color-primary"} style={{margin: "auto"}}>
-            <p style={{textAlign: "center", marginBottom: 0}}>Demo Balances</p>
-            <p style={{margin: 0}}>{balances()}</p>
-        </div>
-        <div style={{marginLeft: "auto", margin: "auto", marginRight: "0"}}>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                style={{backgroundColor: "#E55021"}}
-                onClick={
-                    () => {
-                        props.disconnect()
-                    }}
-            >
-                Disconnect
-            </Button>
-        </div>
     </div>
 }
