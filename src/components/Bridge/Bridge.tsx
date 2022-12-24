@@ -224,15 +224,15 @@ export default function Bridge(props: any) {
             >
                 {buttonMessage}
             </Button>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    style={{backgroundColor: "#01001A"}}
-                    href={"https://faucet.avax.network/"}
-                    target={"_blank"}
-                >
-                    Fuji Faucet
-                </Button>
+            <Button
+                fullWidth
+                variant="contained"
+                style={{backgroundColor: "#01001A"}}
+                href={"https://faucet.avax.network/"}
+                target={"_blank"}
+            >
+                Fuji Faucet
+            </Button>
 
         </ThemeProvider>
     );

@@ -62,7 +62,7 @@ function App() {
     if (account && provider && web3)
       await updateBalances()
 
-    if ((!_disconnect && status != "")  || status == "approved")
+    if ((!_disconnect && status != "") || status == "approved")
       return
 
 
@@ -191,8 +191,10 @@ function App() {
               </div>
               :
               <div>
-                <Approved disconnect={disconnect} name={name} account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
-                          connecting={connecting} chainID={currentChainID} status={status} setStatus={setStatus} balances={balances}/>
+                <Approved disconnect={disconnect} name={name} account={account} setProvider={setProvider}
+                          setWeb3={setWeb3} setConnecting={setConnecting}
+                          connecting={connecting} chainID={currentChainID} status={status} setStatus={setStatus}
+                          balances={balances}/>
               </div>
             }
           </div>

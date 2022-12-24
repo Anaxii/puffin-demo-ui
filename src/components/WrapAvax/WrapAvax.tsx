@@ -4,18 +4,19 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
 import {Web3Context} from "../../helpers/context";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useContext, useEffect, useState} from "react";
 import Web3 from "web3";
 import TextField from "@mui/material/TextField";
 import {AddNetwork} from "../../util/AddNetwork";
+
 const theme = createTheme();
 
 export default function WrapAvax(props: any) {
@@ -74,11 +75,11 @@ export default function WrapAvax(props: any) {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <p style={{marginTop: "5%"}}>
                 Wrap AVAX
             </p>
-            <Grid  container spacing={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <TextField
                         name="amount"

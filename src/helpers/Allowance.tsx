@@ -1,6 +1,6 @@
 const Web3 = require('web3');
 const ERC20 = require("../abi/IERC20.json")
-export default async function GetAllowance(walletAddress :string) {
+export default async function GetAllowance(walletAddress: string) {
     const avaxWeb3 = new Web3(new Web3.providers.HttpProvider(
         "https://node.thepuffin.network/ext/bc/C/rpc"
     ));

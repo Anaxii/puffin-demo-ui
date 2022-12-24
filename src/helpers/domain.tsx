@@ -1,6 +1,7 @@
 const Web3 = require('web3');
 const NameServiceABI = require("../abi/PFNNameService.json")
-export async function GetDomain(walletAddress :string) {
+
+export async function GetDomain(walletAddress: string) {
     if (walletAddress == "") {
         const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
         walletAddress = accounts[0]
@@ -20,7 +21,7 @@ export async function GetDomain(walletAddress :string) {
     return pfnName || ""
 }
 
-export async function GetDomains(walletAddress :string) {
+export async function GetDomains(walletAddress: string) {
     if (walletAddress == "") {
         const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
         walletAddress = accounts[0]
@@ -49,7 +50,11 @@ export async function GetDomains(walletAddress :string) {
                 subs.push({name: subName, subId: j})
             }
         }
-        domains.push({domainName: Web3.utils.hexToString(domainInfo.domainName) + ".pfn", domainId: tokenNum, subaccounts: subs})
+        domains.push({
+            domainName: Web3.utils.hexToString(domainInfo.domainName) + ".pfn",
+            domainId: tokenNum,
+            subaccounts: subs
+        })
 
     }
 

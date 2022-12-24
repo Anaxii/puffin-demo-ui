@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {Copyright} from "../Copyright/Copyright";
 import {useContext, useEffect, useState} from "react";
 import Web3 from "web3";
@@ -20,6 +20,7 @@ import {AddNetwork} from "../../util/AddNetwork";
 import {KYC_URL} from "../../constants/Global";
 import {clear} from "@testing-library/user-event/dist/clear";
 import {Web3Context} from "../../helpers/context";
+
 const theme = createTheme();
 
 export default function Pending(props: any) {
@@ -77,7 +78,7 @@ export default function Pending(props: any) {
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -90,35 +91,36 @@ export default function Pending(props: any) {
                         KYC Request Pending
                     </Typography>
                     <p>
-                        Your account request has been sent, please wait up to 5 minutes for approval. Once your account is approved,
+                        Your account request has been sent, please wait up to 5 minutes for approval. Once your account
+                        is approved,
                         you will have access to the PFN - the first permissioned network built on Avalanche.
                     </p>
-                        <Grid container spacing={2}>
-                            <Grid item xs={6} >
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                    style={{backgroundColor: "#E55021"}}
-                                    onClick={() => AddNetwork("pfn")}
-                                >
-                                    Add PFN to wallet
-                                </Button>
-                            </Grid>
-                            <Grid item xs={6} >
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
-                                    style={{backgroundColor: "#E55021"}}
-                                    onClick={() => AddNetwork("fuji")}
-                                >
-                                    Add Fuji to Wallet
-                                </Button>
-                            </Grid>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{mt: 3, mb: 2}}
+                                style={{backgroundColor: "#E55021"}}
+                                onClick={() => AddNetwork("pfn")}
+                            >
+                                Add PFN to wallet
+                            </Button>
                         </Grid>
+                        <Grid item xs={6}>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{mt: 3, mb: 2}}
+                                style={{backgroundColor: "#E55021"}}
+                                onClick={() => AddNetwork("fuji")}
+                            >
+                                Add Fuji to Wallet
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Box>
             </Container>
         </ThemeProvider>

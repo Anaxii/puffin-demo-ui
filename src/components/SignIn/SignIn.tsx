@@ -1,6 +1,4 @@
 import * as React from 'react';
-import {toast} from "react-toastify";
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,7 +9,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {Copyright} from "../Copyright/Copyright";
 import {useEffect, useState} from "react";
 import Web3 from "web3";
 import Web3Modal from 'web3modal'
@@ -51,13 +48,6 @@ export default function SignIn(props: any) {
     }, [])
 
     const handleSubmit = async () => {
-
-        // let acc = props.account
-        // if (!props.account) {
-        //     const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
-        //     acc = accounts[0]
-        // }
-
         if (!props.account)
             return
 
@@ -70,24 +60,21 @@ export default function SignIn(props: any) {
                 })
         };
 
-            fetch(KYC_URL + '/status', requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    if (data.status == "nonExist") {
-                        props.setPage("signUp")
-                        // reject(false)
-                        return
-                    }
-                    // ok(true)
-                    props.setStatus(data.status)
-                    props.setDisconnect(false)
-                }).catch((err) => {
-                // reject(false)
-                console.log(err)
-                props.setPage("signUp")
-                return false
-            });
+        fetch(KYC_URL + '/status', requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                if (data.status == "nonExist") {
+                    props.setPage("signUp")
+                    return
+                }
+                props.setStatus(data.status)
+                props.setDisconnect(false)
+            }).catch((err) => {
+            console.log(err)
+            props.setPage("signUp")
+            return false
+        });
 
     };
 
@@ -143,28 +130,30 @@ export default function SignIn(props: any) {
                     </div>}
                     {!props.account ?
 
-                    <Box style={{marginTop: 0, paddingTop: 0}} component="form" noValidate onSubmit={submit}
-                         sx={{mt: 3}}>
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{mt: 3, mb: 2}}
-                        style={{backgroundColor: "#E55021"}}
-                        onClick={() => {submit()}}
-                      >
-                        Sign In
-                      </Button>
+                        <Box style={{marginTop: 0, paddingTop: 0}} component="form" noValidate onSubmit={submit}
+                             sx={{mt: 3}}>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{mt: 3, mb: 2}}
+                                style={{backgroundColor: "#E55021"}}
+                                onClick={() => {
+                                    submit()
+                                }}
+                            >
+                                Sign In
+                            </Button>
 
 
-                      <Grid container justifyContent="flex-end">
-                        <Grid item>
-                          <Link onClick={() => props.setPage("signUp")} href="#" variant="body2">
-                            Don't have an account? Sign up
-                          </Link>
-                        </Grid>
-                      </Grid>
-                    </Box>
-                    :
+                            <Grid container justifyContent="flex-end">
+                                <Grid item>
+                                    <Link onClick={() => props.setPage("signUp")} href="#" variant="body2">
+                                        Don't have an account? Sign up
+                                    </Link>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        :
                         <Link onClick={() => props.setPage("signUp")} href="#" variant="body2">
                             Don't have an account? Sign up
                         </Link>

@@ -35,5 +35,4 @@ export const AddNetwork = async (network: string): Promise<void> => {
     }).catch((error: any): void => {
         console.log(error)
     })
-
 }

@@ -107,99 +107,99 @@ export default function SubAccountRequest(props: any) {
 
     return (
         <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                    <Box component="form" onSubmit={handleSubmit} sx={{mt: 3}}>
-                        <p>
-                            Sub-Account Request Form
-                        </p>
-                        <Grid container spacing={2}>
-                            <Grid item xs={8}>
-                                <TextField
-                                    required
-                                    disabled
-                                    fullWidth
-                                    name="parent_signature"
-                                    label={parentSignature.signature ? parentSignature.signature : "Parent Wallet Signature"}
-                                    id="parent_signature"
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
-                                <Box textAlign='center'>
-                                    <a onClick={() => {
-                                        sign("parent")
-                                    }}>
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            id={"parent_sign"}
-                                            sx={{mt: 1, mb: 1}}
-                                            style={{backgroundColor: "#E55021"}}
-                                        >
-                                            Sign
-                                        </Button>
-                                    </a>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    disabled
-                                    fullWidth
-                                    name="parent_address"
-                                    label={parentSignature.walletAddress ? parentSignature.walletAddress : "Parent Wallet Address"}
-                                    type="parent_address"
-                                    id="signature"
-                                />
-                            </Grid>
-                            <Grid item xs={8}>
-                                <TextField
-                                    required
-                                    disabled
-                                    fullWidth
-                                    name="subaccount_signature"
-                                    label={subaccountSignature.signature ? subaccountSignature.signature : "Sub-Account Wallet Signature"}
-                                    id="subaccount_signature"
-                                />
-                            </Grid>
-                            <Grid item xs={4}>
-                                <Box textAlign='center'>
-                                    <a onClick={() => {
-                                        sign("sub")
-                                    }}>
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            id={"subaccount_sign"}
-                                            sx={{mt: 1, mb: 1}}
-                                            style={{backgroundColor: "#E55021"}}
-                                        >
-                                            Sign
-                                        </Button>
-                                    </a>
-                                </Box>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    required
-                                    disabled
-                                    fullWidth
-                                    name="subaccount_address"
-                                    label={subaccountSignature.walletAddress ? subaccountSignature.walletAddress : "Sub-Account Wallet Address"}
-                                    type="subaccount_address"
-                                    id="signature"
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
+            <CssBaseline/>
+            <Box component="form" onSubmit={handleSubmit} sx={{mt: 3}}>
+                <p>
+                    Sub-Account Request Form
+                </p>
+                <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                        <TextField
+                            required
+                            disabled
                             fullWidth
-                            variant="contained"
-                            sx={{mt: 3, mb: 2}}
-                            style={{backgroundColor: "#E55021"}}
-                        >
-                            Request Subaccount
-                        </Button>
-                    </Box>
+                            name="parent_signature"
+                            label={parentSignature.signature ? parentSignature.signature : "Parent Wallet Signature"}
+                            id="parent_signature"
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Box textAlign='center'>
+                            <a onClick={() => {
+                                sign("parent")
+                            }}>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    id={"parent_sign"}
+                                    sx={{mt: 1, mb: 1}}
+                                    style={{backgroundColor: "#E55021"}}
+                                >
+                                    Sign
+                                </Button>
+                            </a>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            disabled
+                            fullWidth
+                            name="parent_address"
+                            label={parentSignature.walletAddress ? parentSignature.walletAddress : "Parent Wallet Address"}
+                            type="parent_address"
+                            id="signature"
+                        />
+                    </Grid>
+                    <Grid item xs={8}>
+                        <TextField
+                            required
+                            disabled
+                            fullWidth
+                            name="subaccount_signature"
+                            label={subaccountSignature.signature ? subaccountSignature.signature : "Sub-Account Wallet Signature"}
+                            id="subaccount_signature"
+                        />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Box textAlign='center'>
+                            <a onClick={() => {
+                                sign("sub")
+                            }}>
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    id={"subaccount_sign"}
+                                    sx={{mt: 1, mb: 1}}
+                                    style={{backgroundColor: "#E55021"}}
+                                >
+                                    Sign
+                                </Button>
+                            </a>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            disabled
+                            fullWidth
+                            name="subaccount_address"
+                            label={subaccountSignature.walletAddress ? subaccountSignature.walletAddress : "Sub-Account Wallet Address"}
+                            type="subaccount_address"
+                            id="signature"
+                        />
+                    </Grid>
+                </Grid>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{mt: 3, mb: 2}}
+                    style={{backgroundColor: "#E55021"}}
+                >
+                    Request Subaccount
+                </Button>
+            </Box>
         </ThemeProvider>
     );
 }

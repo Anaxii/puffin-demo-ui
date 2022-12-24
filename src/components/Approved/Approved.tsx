@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useEffect, useState} from "react";
 import Web3 from "web3";
 import {AddNetwork} from "../../util/AddNetwork";
@@ -15,6 +15,8 @@ import WrapAvax from "../WrapAvax/WrapAvax";
 import SubAccountRequest from "../SubaccountRequest/SubaccountRequest";
 import NameService from "../NameService/NameService";
 import logo from "../../assets/logo.png";
+import SubnetSetup from "../SubnetSetup/SubnetSetup";
+
 const theme = createTheme();
 
 export default function Approved(props: any) {
@@ -38,7 +40,8 @@ export default function Approved(props: any) {
 
     return (
         <ThemeProvider theme={theme}>
-            <AppBar position="fixed" style={{backgroundColor: "#FFFFFF", boxShadow: "none"}} sx={{ bottom: 'auto', top: 0 }}>
+            <AppBar position="fixed" style={{backgroundColor: "#FFFFFF", boxShadow: "none"}}
+                    sx={{bottom: 'auto', top: 0}}>
                 <div className={'navigation'}>
                     <div className={"logo-div"}>
                         <div className={"logo"}>
@@ -50,20 +53,21 @@ export default function Approved(props: any) {
                         </h2>
                     </div>
 
-                    <div className={"color-primary"} style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
+                    <div className={"color-primary"}
+                         style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={(props.status != "sub" ? 1 : 2)} >
+                            <Grid item xs={(props.status != "sub" ? 1 : 2)}>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
                                 <p style={{cursor: "pointer", color: selected == "Bridge" ? "#E55021" : "black"}}
-                                onClick={() => {
-                                    setSelected("Bridge")
-                                }}>
+                                   onClick={() => {
+                                       setSelected("Bridge")
+                                   }}>
                                     Bridge
                                 </p>
                             </Grid>
                             {props.status != "sub" &&
-                            <Grid item xs={2} >
+                            <Grid item xs={2}>
                               <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
                                  onClick={() => {
                                      setSelected("Sub-Accounts")
@@ -73,27 +77,33 @@ export default function Approved(props: any) {
                             </Grid>
                             }
 
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
                                 <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}
-                                onClick={() => {
-                                    setSelected("Name Service")
-                                }}>
-                                    Name Service
+                                   onClick={() => {
+                                       setSelected("Name Service")
+                                   }}>
+                                    Transactions
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
-                                <p style={{cursor: "not-allowed", color: "gray"}}
-                                   >
-                                    dApp Directory
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
+                                <p style={{
+                                    cursor: "pointer",
+                                    color: selected == "Integrate Puffin" ? "#E55021" : "black"
+                                }}
+                                   onClick={() => {
+                                       setSelected("Integrate Puffin")
+                                   }}
+                                >
+                                    Integrate Puffin
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)} >
+                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
                                 <p style={{cursor: "not-allowed", color: "gray"}}
                                 >
                                     Settings
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 1 : 0)} >
+                            <Grid item xs={(props.status != "sub" ? 1 : 0)}>
                             </Grid>
                         </Grid>
                     </div>
@@ -102,7 +112,7 @@ export default function Approved(props: any) {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                             style={{backgroundColor: "#E55021"}}
                             onClick={
                                 () => {
@@ -115,7 +125,7 @@ export default function Approved(props: any) {
                 </div>
             </AppBar>
             <Container component="main" maxWidth="xs" style={{paddingTop: "5%"}}>
-                <CssBaseline />
+                <CssBaseline/>
                 <Box
                     sx={{
                         marginTop: 8,
@@ -124,47 +134,63 @@ export default function Approved(props: any) {
                         alignItems: 'center',
                     }}
                 >
-                    <Typography component="h1" variant="h5">
-                        {props.name == "" ? "Welcome to Puffin" : `Welcome ${props.name}`}
-                    </Typography>
+
                     {selected == "Bridge" && <div>
-                      <Bridge account={props.account} balances={props.balances} />
-                      <WrapAvax account={props.account} balances={props.balances} />
+                      <Typography component="h1" variant="h5">
+                        Puffin Bridge
+                      </Typography>
+                      <Bridge account={props.account} balances={props.balances}/>
+                      <WrapAvax account={props.account} balances={props.balances}/>
                     </div>
                     }
                     {selected == "Sub-Accounts" && <div>
-                      <SubAccountRequest account={props.account} balances={props.balances} />
+                      <Typography component="h1" variant="h5">
+                        Sub-Accounts
+                      </Typography>
+                      <SubAccountRequest account={props.account} balances={props.balances}/>
                     </div>
                     }
-                    {selected == "Name Service" && <NameService account={props.account} balances={props.balances} name={props.name} />}
+                    {selected == "Name Service" && <div>
+                      <Typography component="h1" variant="h5">
+                        Transactions
+                      </Typography>
+                      <NameService account={props.account} balances={props.balances} name={props.name}/>
+                    </div>}
+                    {selected == "Integrate Puffin" && <div>
+                      <SubnetSetup account={props.account} balances={props.balances} name={props.name}/>
+                    </div>}
                     <div style={{margin: "2.5%"}}/>
-                    {props.account}
-                    <Grid container spacing={2}>
-                        <Grid item xs={6} >
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                style={{backgroundColor: "#E55021"}}
-                                onClick={() => AddNetwork("pfn")}
-                            >
-                                Connect to PFN
-                            </Button>
+                    {selected != "Integrate Puffin" &&
+                    <div>
+                        {props.account}
+                      <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 3, mb: 2}}
+                            style={{backgroundColor: "#E55021"}}
+                            onClick={() => AddNetwork("pfn")}
+                          >
+                            Connect to PFN
+                          </Button>
                         </Grid>
-                        <Grid item xs={6} >
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                style={{backgroundColor: "#E55021"}}
-                                onClick={() => AddNetwork("fuji")}
-                            >
-                                Connect to Fuji
-                            </Button>
+                        <Grid item xs={6}>
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 3, mb: 2}}
+                            style={{backgroundColor: "#E55021"}}
+                            onClick={() => AddNetwork("fuji")}
+                          >
+                            Connect to Fuji
+                          </Button>
                         </Grid>
-                    </Grid>
+                      </Grid>
+                    </div>}
+
                 </Box>
             </Container>
         </ThemeProvider>

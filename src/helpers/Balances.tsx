@@ -1,6 +1,7 @@
 const Web3 = require('web3');
 const ERC20 = require("../abi/IERC20.json")
-export async function GetBalances(walletAddress :string) {
+
+export async function GetBalances(walletAddress: string) {
     if (walletAddress == "") {
         const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
         walletAddress = accounts[0]
@@ -12,11 +13,11 @@ export async function GetBalances(walletAddress :string) {
     const avaxWeb3 = new Web3(new Web3.providers.HttpProvider(
         "https://node.thepuffin.network/ext/bc/C/rpc"
     ));
-    let avaxBal =  await avaxWeb3.eth.getBalance( walletAddress )
+    let avaxBal = await avaxWeb3.eth.getBalance(walletAddress)
     const pfnWeb3 = new Web3(new Web3.providers.HttpProvider(
         "https://node.thepuffin.network/ext/bc/273dwzFtrR6JQzLncTAbN5RBtiqdysVfKTJKBvYHhtUHBnrYWe/rpc"
     ));
-    let pfnBal =  await pfnWeb3.eth.getBalance( walletAddress )
+    let pfnBal = await pfnWeb3.eth.getBalance(walletAddress)
 
     let wavaxContract = new avaxWeb3.eth.Contract(ERC20, "0x1D308089a2D1Ced3f1Ce36B1FcaF815b07217be3");
     let wavaxBalance = await wavaxContract.methods.balanceOf(walletAddress).call();
