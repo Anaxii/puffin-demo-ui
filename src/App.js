@@ -92,6 +92,14 @@ function App() {
   }
 
   useEffect(() => {
+    let subAccounts = localStorage.getItem("subs")
+    if (!subAccounts)
+      localStorage.setItem("subs", JSON.stringify({
+        gmx: "0xee1b9bfd54feec172b99bc83fa9aceb955f43bf3",
+        ledger: "0xf8c537a4a923e46fa27be96dfefee969dfed542c",
+        joe: "0x6d3e3d43d65d4a43c4924bac68b8142ef8f31348",
+        thomas: "0x9cd124f04f1bd78f28dd7bf71e66c079732cfa77"
+      }))
     if (!account) {
       // setWindowAccount()
     }

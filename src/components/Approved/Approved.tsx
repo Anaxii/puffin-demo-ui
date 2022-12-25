@@ -16,6 +16,7 @@ import SubAccountRequest from "../SubaccountRequest/SubaccountRequest";
 import NameService from "../NameService/NameService";
 import logo from "../../assets/logo.png";
 import SubnetSetup from "../SubnetSetup/SubnetSetup";
+import Settings from "../Settings/Settings";
 
 const theme = createTheme();
 
@@ -23,9 +24,7 @@ export default function Approved(props: any) {
 
     const [web3Modal, setWeb3Modal] = useState(null)
     const [selected, setSelected] = useState("Bridge")
-    useEffect(() => {
-        // @ts-ignore
-    }, [web3Modal])
+
 
     async function connectWallet() {
         console.log(props.status)
@@ -98,7 +97,10 @@ export default function Approved(props: any) {
                                 </p>
                             </Grid>
                             <Grid item xs={(props.status != "sub" ? 2 : 2)}>
-                                <p style={{cursor: "not-allowed", color: "gray"}}
+                                <p style={{cursor: "pointer", color: selected == "Settings" ? "#E55021" : "black"}}
+                                   onClick={() => {
+                                       setSelected("Settings")
+                                   }}
                                 >
                                     Settings
                                 </p>
@@ -159,8 +161,11 @@ export default function Approved(props: any) {
                     {selected == "Integrate Puffin" && <div>
                       <SubnetSetup account={props.account} balances={props.balances} name={props.name}/>
                     </div>}
+                    {selected == "Settings" && <div>
+                      <Settings account={props.account} balances={props.balances} name={props.name}/>
+                    </div>}
                     <div style={{margin: "2.5%"}}/>
-                    {selected != "Integrate Puffin" &&
+                    {selected != "Integrate Puffin" && selected != "Settings" &&
                     <div>
                         {props.account}
                       <Grid container spacing={2}>
