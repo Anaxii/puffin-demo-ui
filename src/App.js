@@ -179,17 +179,13 @@ function App() {
 
                         </div>
                         {page == "signIn" &&
-                        <SignIn account={account} setProvider={setProvider} setWeb3={setWeb3}
-                                setConnecting={setConnecting}
-                                connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID}
-                                setPage={setPage}
+                        <SignIn account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
+                                connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
                                 setStatus={setStatus} setDisconnect={setDisconnect} setWeb3Data={setWeb3Data}/>
                         }
                         {page == "signUp" &&
-                        <SignUp account={account} setProvider={setProvider} setWeb3={setWeb3}
-                                setConnecting={setConnecting}
-                                connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID}
-                                setPage={setPage}
+                        <SignUp account={account} setProvider={setProvider} setWeb3={setWeb3} setConnecting={setConnecting}
+                                connecting={connecting} loadingMessage={loadingMessage} chainID={currentChainID} setPage={setPage}
                                 setStatus={setStatus} setDisconnect={setDisconnect}/>
                         }
 
@@ -199,16 +195,13 @@ function App() {
                         <Navigation account={account} balances={balances}/>
                         {status == "pending" ?
                             <div>
-                                <Pending setStatus={setStatus} account={account}
-                                         setShowLoadingModal={setShowLoadingModal}/>
+                                <Pending setStatus={setStatus} account={account} setShowLoadingModal={setShowLoadingModal}/>
                             </div>
                             :
                             <div>
-                                <Approved disconnect={disconnect} name={name} account={account}
-                                          setProvider={setProvider}
+                                <Approved disconnect={disconnect} name={name} account={account} setProvider={setProvider}
                                           setWeb3={setWeb3} setConnecting={setConnecting}
-                                          connecting={connecting} chainID={currentChainID} status={status}
-                                          setStatus={setStatus}
+                                          connecting={connecting} chainID={currentChainID} status={status} setStatus={setStatus}
                                           balances={balances}/>
                             </div>
                         }

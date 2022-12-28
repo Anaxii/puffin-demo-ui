@@ -68,71 +68,70 @@ export default function Deploy(props: any) {
             </div>
             {!isExpanded &&
             <div>
-                <p>
-                    The first step is to deploy the PuffinKYC contract on your network. You will be prompted to switch
-                    to your network.
-                </p>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{mt: 3, mb: 2}}
-                    style={{backgroundColor: "#E55021"}}
-                    {...getToggleProps({
-                        onClick: () => setExpanded((prevExpanded) => !prevExpanded),
-                    })}
-                >
-                    Deploy Contract
-                </Button>
-                <p>
-                    Next you will set our admin address as the owner so we can update the contract.
-                </p>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{mt: 3, mb: 2}}
-                    style={{backgroundColor: "#E55021"}}
-                    {...getToggleProps({
-                        onClick: () => setExpanded((prevExpanded) => !prevExpanded),
-                    })}
-                >
-                    Set New Owner
-                </Button>
-                <p>
-                    (OPTIONAL) If your network is permissioned, approve our address for contract interaction using the
-                    IAllowInterface.
-                </p>
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{mt: 3, mb: 2}}
-                    style={{backgroundColor: "#E55021"}}
-                    {...getToggleProps({
-                        onClick: () => setExpanded((prevExpanded) => !prevExpanded),
-                    })}
-                >
-                    Enable Puffin Wallet
-                </Button>
-                <p>
-                    Send gas tokens to: 0x673717B80715c13eF5f6e1DcdB599b6c0dEe3d6d
-                </p>
-                <TextField
-                    required
-                    fullWidth
-                    id="address"
-                    label="Number of Tokens"
-                    name="address"
-                />
-                <Button
-                    fullWidth
-                    variant="contained"
-                    sx={{mt: 3, mb: 2}}
-                    style={{backgroundColor: "#E55021"}}
-                    {...getToggleProps({
-                        onClick: () => setExpanded((prevExpanded) => !prevExpanded),
-                    })}
-                >
-                    Send Tokens
-                </Button>
+
+              <p>
+                The first step is to deploy the PuffinKYC contract on your network. You will be prompted to switch to your network.
+              </p>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+                style={{backgroundColor: "#E55021"}}
+                {...getToggleProps({
+                    onClick: () => setExpanded((prevExpanded) => !prevExpanded),
+                })}
+              >
+                Deploy Contract
+              </Button>
+              <p>
+                Next you will set our admin address as the owner so we can update the contract.
+              </p>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+                style={{backgroundColor: "#E55021"}}
+                {...getToggleProps({
+                    onClick: () => setExpanded((prevExpanded) => !prevExpanded),
+                })}
+              >
+                Set New Owner
+              </Button>
+              <p>
+                (OPTIONAL) If your network is permissioned, approve our address for contract interaction using the IAllowInterface.
+              </p>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+                style={{backgroundColor: "#E55021"}}
+                {...getToggleProps({
+                    onClick: () => setExpanded((prevExpanded) => !prevExpanded),
+                })}
+              >
+                Enable Puffin Wallet
+              </Button>
+              <p>
+                Send gas tokens to: 0x673717B80715c13eF5f6e1DcdB599b6c0dEe3d6d
+              </p>
+              <TextField
+                required
+                fullWidth
+                id="address"
+                label="Number of Tokens"
+                name="address"
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+                style={{backgroundColor: "#E55021"}}
+                {...getToggleProps({
+                    onClick: () => setExpanded((prevExpanded) => !prevExpanded),
+                })}
+              >
+                Send Tokens
+              </Button>
             </div>
             }
         </div>

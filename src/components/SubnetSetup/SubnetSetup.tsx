@@ -22,7 +22,7 @@ export default function SubnetSetup(props: any) {
     const [projectInfo, setProjectInfo]: [any, any] = useState({})
 
     const [level, setLevel] = useState("flex")
-    const [chainId, setChainId] = useState(1234)
+    const [chainId, setChainId] = useState(0)
 
     const [bridge, setBridge] = useState(false)
     const [geo, setGeo] = useState(false)
@@ -71,12 +71,11 @@ export default function SubnetSetup(props: any) {
                 <TeamInfo projectInfo={projectInfo} setProjectInfo={setProjectInfo} setChainId={setChainId}/>}
                 {step == 1 &&
                 <SubnetInfo projectInfo={projectInfo} setProjectInfo={setProjectInfo} setChainId={setChainId}
-                            setRpcURL={setRpcURL} setName={setName}/>}
+                setRpcURL={setRpcURL} setName={setName}/>}
                 {step == 2 &&
                 <SelectFeatures setLevel={setLevel} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
-                                setBridge={setBridge} setGeo={setGeo} setKYC={setKYC} setAML={setAML}
-                                setUsers={setUsers} users={users}
-                                geo={geo} aml={aml} bridge={bridge} kyc={kyc}/>}
+                setBridge={setBridge} setGeo={setGeo} setKYC={setKYC} setAML={setAML} setUsers={setUsers} users={users}
+                geo={geo} aml={aml} bridge={bridge} kyc={kyc}/>}
                 {step == 3 &&
                 <Deploy level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}/>}
                 {step == 4 &&

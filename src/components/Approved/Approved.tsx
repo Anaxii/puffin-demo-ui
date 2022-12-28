@@ -67,17 +67,16 @@ export default function Approved(props: any) {
                             </Grid>
                             {props.status != "sub" &&
                             <Grid item xs={2}>
-                                <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
-                                   onClick={() => {
-                                       setSelected("Sub-Accounts")
-                                   }}>
-                                    Sub-Accounts
-                                </p>
+                              <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
+                                 onClick={() => {
+                                     setSelected("Sub-Accounts")
+                                 }}>
+                                Sub-Accounts
+                              </p>
                             </Grid>
                             }
-
                             <Grid item xs={(props.status != "sub" ? 2 : 2)}>
-                                <p style={{cursor: "pointer", color: selected == "Transactions" ? "#E55021" : "black"}}
+                                <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Transactions")
                                    }}>
