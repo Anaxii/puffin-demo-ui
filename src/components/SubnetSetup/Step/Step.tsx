@@ -22,7 +22,7 @@ export default function Step(props: any) {
                 </Button>
             </div>
             }
-            {(props.step > 0 && props.step < 4) &&
+            {(props.step > 0 && props.step < 7) &&
             <div>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -47,6 +47,11 @@ export default function Step(props: any) {
                             sx={{mt: 3, mb: 2}}
                             style={{backgroundColor: "#E55021"}}
                             onClick={() => {
+                                if (props.isExpanded) {
+                                    props.setStep(7)
+                                    props.setExpanded(false)
+                                    return
+                                }
                                 props.setStep(props.step + 1)
                             }}
                         >
@@ -57,7 +62,7 @@ export default function Step(props: any) {
 
             </div>
             }
-            {props.step == 4 &&
+            {props.step == 7 &&
             <div>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>

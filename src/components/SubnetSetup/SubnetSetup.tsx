@@ -10,6 +10,9 @@ import SelectFeatures from "./SelectFeatures/SelectFeatures";
 import Deploy from "./Deploy/Deploy";
 import Verify from "./Verify/Verify";
 import TeamInfo from "./TeamInfo/TeamInfo";
+import SetOwner from "./SetOwner/SetOwner";
+import EnableWallet from "./EnableWallet/EnableWallet";
+import SendTokens from "./SendTokens/SendTokens";
 
 const theme = createTheme();
 
@@ -29,6 +32,8 @@ export default function SubnetSetup(props: any) {
     const [aml, setAML] = useState(false)
     const [kyc, setKYC] = useState(false)
     const [users, setUsers] = useState("")
+
+    const [isExpanded, setExpanded] = useState(false)
 
     useEffect(() => {
         if (bridge && geo && aml && kyc) {
@@ -77,11 +82,17 @@ export default function SubnetSetup(props: any) {
                 setBridge={setBridge} setGeo={setGeo} setKYC={setKYC} setAML={setAML} setUsers={setUsers} users={users}
                 geo={geo} aml={aml} bridge={bridge} kyc={kyc}/>}
                 {step == 3 &&
-                <Deploy level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}/>}
+                <Deploy level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo} isExpanded={isExpanded} setExpanded={setExpanded}/>}
                 {step == 4 &&
+                <SetOwner level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo} isExpanded={isExpanded} setExpanded={setExpanded} />}
+                {step == 5 &&
+                <EnableWallet level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo} isExpanded={isExpanded} setExpanded={setExpanded}/>}
+                {step == 6 &&
+                <SendTokens level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo} isExpanded={isExpanded} setExpanded={setExpanded}/>}
+                {step == 7 &&
                 <Verify level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
-                        geo={geo} aml={aml} bridge={bridge} kyc={kyc} users={users} rpcURL={rpcURL} name={name}/>}
-                <Step setStep={setStep} step={step} sendVerify={sendVerify}/>
+                        geo={geo} aml={aml} bridge={bridge} kyc={kyc} users={users} rpcURL={rpcURL} name={name} />}
+                <Step setStep={setStep} step={step} isExpanded={isExpanded} setExpanded={setExpanded} sendVerify={sendVerify}/>
             </Box>
         </ThemeProvider>
     );

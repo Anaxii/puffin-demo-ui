@@ -8,8 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import TextField from "@mui/material/TextField";
 
-export default function Deploy(props: any) {
-
+export default function SendTokens(props: any) {
     const {getCollapseProps, getToggleProps} = useCollapse({isExpanded: props.isExpanded})
 
     return (
@@ -69,15 +68,22 @@ export default function Deploy(props: any) {
             {!props.isExpanded &&
             <div>
               <p>
-                The first step is to deploy the PuffinKYC contract on your network. You will be prompted to switch to your network.
+                Send gas tokens to: 0x673717B80715c13eF5f6e1DcdB599b6c0dEe3d6d
               </p>
+              <TextField
+                required
+                fullWidth
+                id="address"
+                label="Number of Tokens"
+                name="address"
+              />
               <Button
                 fullWidth
                 variant="contained"
                 sx={{mt: 3, mb: 2}}
                 style={{backgroundColor: "#E55021"}}
               >
-                Deploy Contract
+                Send Tokens
               </Button>
             </div>
             }

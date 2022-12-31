@@ -8,8 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import TextField from "@mui/material/TextField";
 
-export default function Deploy(props: any) {
-
+export default function SetOwner(props: any) {
     const {getCollapseProps, getToggleProps} = useCollapse({isExpanded: props.isExpanded})
 
     return (
@@ -68,8 +67,9 @@ export default function Deploy(props: any) {
             </div>
             {!props.isExpanded &&
             <div>
+
               <p>
-                The first step is to deploy the PuffinKYC contract on your network. You will be prompted to switch to your network.
+                Next you will set our admin address as the owner so we can update the contract.
               </p>
               <Button
                 fullWidth
@@ -77,7 +77,7 @@ export default function Deploy(props: any) {
                 sx={{mt: 3, mb: 2}}
                 style={{backgroundColor: "#E55021"}}
               >
-                Deploy Contract
+                Set New Owner
               </Button>
             </div>
             }
