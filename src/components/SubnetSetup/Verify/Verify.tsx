@@ -6,8 +6,23 @@ import { parse } from 'url';
 import 'react-toastify/dist/ReactToastify.css';
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
+import {CLIENT_URL, KYC_URL} from "../../../constants/Global";
+import {toast} from "react-toastify";
 
 export default function Verify(props: any) {
+    const setContract = (e: any) => {
+        e.preventDefault()
+        if (e.target.id == "puffin_kyc_address") {
+            if (props.geo) {
+                props.updateClientInfo("puffin_geo_address", e.target.value)
+            } else {
+                props.updateClientInfo(e.target.id, e.target.value)
+            }
+        } else {
+            props.updateClientInfo(e.target.id, e.target.value)
+        }
+    }
+
     return (
         <div style={{width: "100%"}}>
             <Typography component="h1" variant="h5">
@@ -15,17 +30,30 @@ export default function Verify(props: any) {
             </Typography>
             <Box component="form" sx={{mt: 3}}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <TextField
-                            autoComplete="given-name"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="PuffinKYC Contract Address"
-                            autoFocus
-                        />
-                    </Grid>
+                    {/*<Grid item xs={12}>*/}
+                    {/*    <TextField*/}
+                    {/*        autoComplete="given-name"*/}
+                    {/*        name="firstName"*/}
+                    {/*        required*/}
+                    {/*        fullWidth*/}
+                    {/*        id="puffin_kyc_address"*/}
+                    {/*        label="PuffinUsers Contract Address"*/}
+                    {/*        autoFocus*/}
+                    {/*        onChange={setContract}*/}
+                    {/*    />*/}
+                    {/*</Grid>*/}
+                    {/*<Grid item xs={12}>*/}
+                    {/*    <TextField*/}
+                    {/*        autoComplete="given-name"*/}
+                    {/*        name="firstName"*/}
+                    {/*        required*/}
+                    {/*        fullWidth*/}
+                    {/*        id="puffin_client_address"*/}
+                    {/*        label="PuffinClient Contract Address"*/}
+                    {/*        autoFocus*/}
+                    {/*        onChange={setContract}*/}
+                    {/*    />*/}
+                    {/*</Grid>*/}
                     <Grid item xs={3}>
                         <p style={{textAlign: "left", margin: 0}}>
                             Chain ID:

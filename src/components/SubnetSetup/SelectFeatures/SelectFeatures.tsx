@@ -9,7 +9,7 @@ export default function SelectFeatures(props: any) {
 
     const setUsers = (e: any) => {
         e.preventDefault()
-        props.setUsers(e.target.value)
+        props.updateClientInfo(e.target.id, e.target.value)
     }
 
     return (
@@ -66,7 +66,7 @@ export default function SelectFeatures(props: any) {
                             fullWidth
                             onChange={setUsers}
                             value={props.users}
-                            id="address"
+                            id="max_users"
                             label="Number of Users"
                             name="address"
                         />

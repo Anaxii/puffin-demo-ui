@@ -5,10 +5,9 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 
 export default function TeamInfo(props: any) {
-
-    const setId = (e: any) => {
+    const setValue = (e: any) => {
         e.preventDefault()
-        props.setChainId(e.target.value)
+        props.updateClientInfo(e.target.id, e.target.value)
     }
 
     return (
@@ -24,19 +23,10 @@ export default function TeamInfo(props: any) {
                             name="firstName"
                             required
                             fullWidth
-                            id="firstName"
+                            id="admin_name"
                             label="Your Name"
                             autoFocus
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Project/Company Name"
-                            name="lastName"
-                            autoComplete="family-name"
+                            onChange={setValue}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -45,9 +35,10 @@ export default function TeamInfo(props: any) {
                             name="firstName"
                             required
                             fullWidth
-                            id="firstName"
+                            id="admin_telegram"
                             label="Your Telegram or Discord"
                             autoFocus
+                            onChange={setValue}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -56,9 +47,31 @@ export default function TeamInfo(props: any) {
                             name="firstName"
                             required
                             fullWidth
-                            id="firstName"
+                            id="team_size"
                             label="Team Size"
                             autoFocus
+                            onChange={setValue}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            id="project_communication_channel"
+                            label="Project/Company Discord or Telegram"
+                            name="email"
+                            autoComplete="email"
+                            onChange={setValue}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            required
+                            fullWidth
+                            id="project_website"
+                            label="Project/Company Website"
+                            name="address"
+                            onChange={setValue}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -66,18 +79,9 @@ export default function TeamInfo(props: any) {
                             required
                             fullWidth
                             id="email"
-                            label="Project/Company Discord or Telegram"
-                            name="email"
-                            autoComplete="email"
-                        />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            id="address"
-                            label="Project/Company Website"
+                            label="Your Email"
                             name="address"
+                            onChange={setValue}
                         />
                     </Grid>
                 </Grid>

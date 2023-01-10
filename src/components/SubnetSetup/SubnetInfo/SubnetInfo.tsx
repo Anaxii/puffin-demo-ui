@@ -6,18 +6,11 @@ import Typography from "@mui/material/Typography";
 import {useState} from "react";
 
 export default function SubnetInfo(props: any) {
-    const [subnetType, setSubnetType] = useState("Subnet-EVM")
+    const [subnetType, setSubnetType] = useState("evm")
 
     const setValue = (e: any) => {
         e.preventDefault()
-        console.log(e.target.id)
-        if (e.target.id == "name") {
-            props.setName(e.target.value)
-        } else if (e.target.id == "chain") {
-            props.setChainId(e.target.value)
-        } else {
-            props.setRpcURL(e.target.value)
-        }
+        props.updateClientInfo(e.target.id, e.target.value)
     }
 
     return (
@@ -33,7 +26,7 @@ export default function SubnetInfo(props: any) {
                             name="firstName"
                             required
                             fullWidth
-                            id="name"
+                            id="project_name"
                             onChange={setValue}
                             label="Subnet Name"
                             autoFocus
@@ -43,8 +36,19 @@ export default function SubnetInfo(props: any) {
                         <TextField
                             required
                             fullWidth
-                            id="rpc"
+                            id="rpc_url"
                             label="RPC URL"
+                            onChange={setValue}
+                            name="lastName"
+                            autoComplete="family-name"
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            fullWidth
+                            id="ws_url"
+                            label="Websocket URL"
                             onChange={setValue}
                             name="lastName"
                             autoComplete="family-name"
@@ -56,25 +60,15 @@ export default function SubnetInfo(props: any) {
                             name="firstName"
                             required
                             fullWidth
-                            id="firstName"
+                            id="gas_token_symbol"
                             label="Gas Token Symbol"
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            autoComplete="given-name"
-                            name="firstName"
-                            required
-                            fullWidth
-                            id="firstName"
-                            label="Gas Token Decimals"
                         />
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
                             required
                             fullWidth
-                            id="chain"
+                            id="chain_id"
                             label="Chain ID"
                             onChange={setValue}
                             name="email"
@@ -87,7 +81,8 @@ export default function SubnetInfo(props: any) {
                             fullWidth
                             disabled
                             value={subnetType}
-                            id="address"
+                            onChange={setValue}
+                            id="vm"
                             label="VM Name"
                             name="address"
                         />

@@ -1,16 +1,55 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import useCollapse from "react-collapsed";
 import Button from "@mui/material/Button";
 import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import TextField from "@mui/material/TextField";
+import {AddNetwork} from "../../../util/AddNetwork";
+import Factory from "../../../abi/PuffinFactory.json";
+import {Web3Context} from "../../../helpers/context";
 
 export default function Deploy(props: any) {
+    const web3Context: any = useContext(Web3Context);
 
     const {getCollapseProps, getToggleProps} = useCollapse({isExpanded: props.isExpanded})
+    async function deployContract(_type: string) {
+        await AddNetwork("fuji")
+
+        let newStatus = new Promise(async (ok: any, reject: any) => {
+            let nameContract = new web3Context.web3.eth.Contract(Factory, "0x10c52286D43f08f3DdE4E7DDbd34C6FcA8d17f1f");
+            if (_type == "c") {
+                await nameContract.methods.newClient("0x56A52b69179fB4BF0d0Bc9aefC340E63c36d3895").send({from: web3Context.account}).then((tx: any) => {
+                    let newContract = tx.events.OwnershipTransferred[0].address
+                    props.updateClientInfo("puffin_client_address", newContract)
+                    ok()
+                }).catch((err: any) => reject(err))
+            } else {
+                await nameContract.methods.newUsers("0x56A52b69179fB4BF0d0Bc9aefC340E63c36d3895").send({from: web3Context.account}).then((tx: any) => {
+                    let newContract = tx.events.OwnershipTransferred[0].address
+                    if (props.geo) {
+                        props.updateClientInfo("puffin_geo_address", newContract)
+                    } else {
+                        props.updateClientInfo("puffin_kyc_address", newContract)
+                    }
+                    ok()
+                }).catch((err: any) => reject(err))
+            }
+
+        })
+
+        await toast.promise(
+            newStatus,
+            {
+                success: 'Transaction Successful',
+                pending: 'Transaction pending',
+                error: 'Transaction failed'
+            }
+        )
+
+    }
 
     return (
         <div style={{width: "100%"}}>
@@ -69,15 +108,29 @@ export default function Deploy(props: any) {
             {!props.isExpanded &&
             <div>
               <p>
-                The first step is to deploy the PuffinKYC contract on your network. You will be prompted to switch to your network.
+                The first step is to deploy the PuffinClient and PuffinUsers contracts on your network. You will be prompted to switch to your network.
               </p>
               <Button
                 fullWidth
                 variant="contained"
                 sx={{mt: 3, mb: 2}}
                 style={{backgroundColor: "#E55021"}}
+                onClick={() => {
+                    deployContract("c")
+                }}
               >
-                Deploy Contract
+                Deploy Client
+              </Button>
+              <Button
+                fullWidth
+                variant="contained"
+                sx={{mt: 3, mb: 2}}
+                style={{backgroundColor: "#E55021"}}
+                onClick={() => {
+                    deployContract("u")
+                }}
+              >
+                Deploy Users
               </Button>
             </div>
             }

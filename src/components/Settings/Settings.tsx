@@ -78,7 +78,6 @@ export default function Settings(props: any) {
                   Sub Accounts
                 </Typography>
                   {Object.keys(subAccounts).map((key: any, value: any) => {
-                      console.log(key, value)
                       return (
                           <div>
                               <Grid container spacing={2}>

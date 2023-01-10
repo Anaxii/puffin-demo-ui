@@ -68,23 +68,9 @@ export default function SendTokens(props: any) {
             {!props.isExpanded &&
             <div>
               <p>
-                Send gas tokens to: 0x673717B80715c13eF5f6e1DcdB599b6c0dEe3d6d
+                Send gas tokens to: 0x56A52b69179fB4BF0d0Bc9aefC340E63c36d3895
               </p>
-              <TextField
-                required
-                fullWidth
-                id="address"
-                label="Number of Tokens"
-                name="address"
-              />
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{mt: 3, mb: 2}}
-                style={{backgroundColor: "#E55021"}}
-              >
-                Send Tokens
-              </Button>
+
             </div>
             }
         </div>

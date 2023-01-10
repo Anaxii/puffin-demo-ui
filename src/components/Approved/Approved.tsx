@@ -17,13 +17,14 @@ import Transactions from "../Transactions/Transactions";
 import logo from "../../assets/logo.png";
 import SubnetSetup from "../SubnetSetup/SubnetSetup";
 import Settings from "../Settings/Settings";
+import Map from "../Map/Map";
 
 const theme = createTheme();
 
 export default function Approved(props: any) {
 
     const [web3Modal, setWeb3Modal] = useState(null)
-    const [selected, setSelected] = useState("Bridge")
+    const [selected, setSelected] = useState("Integrate Puffin")
 
 
     async function connectWallet() {
@@ -39,6 +40,95 @@ export default function Approved(props: any) {
 
     return (
         <ThemeProvider theme={theme}>
+            {/*main*/}
+            {/*<AppBar position="fixed" style={{backgroundColor: "#FFFFFF", boxShadow: "none"}}*/}
+            {/*        sx={{bottom: 'auto', top: 0}}>*/}
+            {/*    <div className={'navigation'}>*/}
+            {/*        <div className={"logo-div"}>*/}
+            {/*            <div className={"logo"}>*/}
+            {/*                <img width={"55px"} src={logo}/>*/}
+
+            {/*            </div>*/}
+            {/*            <h2 className={"exposure-title"}>*/}
+            {/*                Puffin KYC*/}
+            {/*            </h2>*/}
+            {/*        </div>*/}
+
+            {/*        <div className={"color-primary"}*/}
+            {/*             style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>*/}
+            {/*            <Grid container spacing={2}>*/}
+            {/*                <Grid item xs={(props.status != "sub" ? 1 : 2)}>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item xs={(props.status != "sub" ? 2 : 2)}>*/}
+            {/*                    <p style={{cursor: "pointer", color: selected == "Bridge" ? "#E55021" : "black"}}*/}
+            {/*                       onClick={() => {*/}
+            {/*                           setSelected("Bridge")*/}
+            {/*                       }}>*/}
+            {/*                        Bridge*/}
+            {/*                    </p>*/}
+            {/*                </Grid>*/}
+            {/*                {props.status != "sub" &&*/}
+            {/*                <Grid item xs={2}>*/}
+            {/*                  <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}*/}
+            {/*                     onClick={() => {*/}
+            {/*                         setSelected("Sub-Accounts")*/}
+            {/*                     }}>*/}
+            {/*                    Sub-Accounts*/}
+            {/*                  </p>*/}
+            {/*                </Grid>*/}
+            {/*                }*/}
+            {/*                <Grid item xs={(props.status != "sub" ? 2 : 2)}>*/}
+            {/*                    <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}*/}
+            {/*                       onClick={() => {*/}
+            {/*                           setSelected("Transactions")*/}
+            {/*                       }}>*/}
+            {/*                        Transactions*/}
+            {/*                    </p>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item xs={(props.status != "sub" ? 2 : 2)}>*/}
+            {/*                    <p style={{*/}
+            {/*                        cursor: "pointer",*/}
+            {/*                        color: selected == "Integrate Puffin" ? "#E55021" : "black"*/}
+            {/*                    }}*/}
+            {/*                       onClick={() => {*/}
+            {/*                           setSelected("Integrate Puffin")*/}
+            {/*                       }}*/}
+            {/*                    >*/}
+            {/*                        Integrate Puffin*/}
+            {/*                    </p>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item xs={(props.status != "sub" ? 2 : 2)}>*/}
+            {/*                    <p style={{cursor: "pointer", color: selected == "Settings" ? "#E55021" : "black"}}*/}
+            {/*                       onClick={() => {*/}
+            {/*                           setSelected("Settings")*/}
+            {/*                       }}*/}
+            {/*                    >*/}
+            {/*                        Settings*/}
+            {/*                    </p>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item xs={(props.status != "sub" ? 1 : 0)}>*/}
+            {/*                </Grid>*/}
+            {/*            </Grid>*/}
+            {/*        </div>*/}
+            {/*        <div style={{marginLeft: "auto", margin: "auto", marginRight: "0"}}>*/}
+            {/*            <Button*/}
+            {/*                type="submit"*/}
+            {/*                fullWidth*/}
+            {/*                variant="contained"*/}
+            {/*                sx={{mt: 3, mb: 2}}*/}
+            {/*                style={{backgroundColor: "#E55021"}}*/}
+            {/*                onClick={*/}
+            {/*                    () => {*/}
+            {/*                        props.disconnect()*/}
+            {/*                    }}*/}
+            {/*            >*/}
+            {/*                Disconnect*/}
+            {/*            </Button>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</AppBar>*/}
+
+            {/*Geo*/}
             <AppBar position="fixed" style={{backgroundColor: "#FFFFFF", boxShadow: "none"}}
                     sx={{bottom: 'auto', top: 0}}>
                 <div className={'navigation'}>
@@ -55,35 +145,33 @@ export default function Approved(props: any) {
                     <div className={"color-primary"}
                          style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={(props.status != "sub" ? 1 : 2)}>
-                            </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
-                                <p style={{cursor: "pointer", color: selected == "Bridge" ? "#E55021" : "black"}}
+                            <Grid item xs={3}>
+                                <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
                                    onClick={() => {
-                                       setSelected("Bridge")
+                                       setSelected("Overview")
                                    }}>
-                                    Bridge
+                                    Overview
                                 </p>
                             </Grid>
-                            {props.status != "sub" &&
-                            <Grid item xs={2}>
-                              <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}
-                                 onClick={() => {
-                                     setSelected("Sub-Accounts")
-                                 }}>
-                                Sub-Accounts
-                              </p>
-                            </Grid>
-                            }
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
-                                <p style={{cursor: "pointer", color: selected == "Name Service" ? "#E55021" : "black"}}
+                            <Grid item xs={3}>
+                                <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
                                    onClick={() => {
-                                       setSelected("Transactions")
+                                       setSelected("Map")
                                    }}>
-                                    Transactions
+                                    Map
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
+                            {/*{props.status != "sub" &&*/}
+                            {/*<Grid item xs={2}>*/}
+                            {/*  <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}*/}
+                            {/*     onClick={() => {*/}
+                            {/*         setSelected("Sub-Accounts")*/}
+                            {/*     }}>*/}
+                            {/*    Sub-Accounts*/}
+                            {/*  </p>*/}
+                            {/*</Grid>*/}
+                            {/*}*/}
+                            <Grid item xs={3}>
                                 <p style={{
                                     cursor: "pointer",
                                     color: selected == "Integrate Puffin" ? "#E55021" : "black"
@@ -92,10 +180,10 @@ export default function Approved(props: any) {
                                        setSelected("Integrate Puffin")
                                    }}
                                 >
-                                    Integrate Puffin
+                                    Setup
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 2 : 2)}>
+                            <Grid item xs={3}>
                                 <p style={{cursor: "pointer", color: selected == "Settings" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Settings")
@@ -162,6 +250,9 @@ export default function Approved(props: any) {
                     </div>}
                     {selected == "Settings" && <div>
                         <Settings account={props.account} balances={props.balances} name={props.name}/>
+                    </div>}
+                    {selected == "Map" && <div>
+                      <Map account={props.account} balances={props.balances} name={props.name}/>
                     </div>}
                     <div style={{margin: "2.5%"}}/>
                     {selected != "Integrate Puffin" && selected != "Settings" && selected != "Transactions" &&
