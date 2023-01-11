@@ -8,6 +8,8 @@ import {useContext, useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import {ACCOUNT_URL, CLIENT_URL} from "../../constants/Global";
+import {GetClientInfo} from "../../helpers/Client";
+import Web3 from "web3";
 
 const theme = createTheme();
 
@@ -17,6 +19,11 @@ export default function Settings(props: any) {
     const [clientInfo, setClientInfo] = useState({})
     const [kyc, setKYC] = useState(false)
     const [geo, setGeo] = useState(false)
+    const [period, setPeriod] = useState(0)
+    const [users, setUsers] = useState(0)
+    const [cost, setCost] = useState(0)
+    const [paymentToken, setPaymentToken] = useState("")
+    const [isCurrent, setIsCurrent] = useState(false)
     useEffect(() => {
         let _subAccounts = localStorage.getItem("subs")
         if (_subAccounts)
@@ -30,7 +37,7 @@ export default function Settings(props: any) {
         };
         fetch(CLIENT_URL + '/client?id=1', requestOptions)
             .then(response => response.json())
-            .then(data => {
+            .then(async data => {
                 setClientInfo(data)
                 for (let i = 0; i < data.package_options.length; i ++) {
                     if (data.package_options[i] == "kyc")
@@ -38,8 +45,21 @@ export default function Settings(props: any) {
                     if (data.package_options[i] == "geo_block")
                         setGeo(true)
                 }
+
+                let info: any
+                if (data.puffin_geo_address) {
+                    info = await GetClientInfo(data.puffin_client_address, data.puffin_geo_address, data.rpc_url)
+                } else {
+                    info = await GetClientInfo(data.puffin_client_address, data.puffin_kyc_address, data.rpc_url)
+                }
+
+                if (info) {
+                    setPaymentToken(info.paymentToken)
+                    setUsers(info.users)
+                    setPeriod(info.epoch)
+                    setIsCurrent(info.isCurrent)
+                }
             }).catch((err: any) => {
-            console.log(err)
             return false
         });
     }
@@ -157,7 +177,7 @@ export default function Settings(props: any) {
             <div>
 
               <Typography component="h1" variant="h5" textAlign={"left"} marginTop={"2em"} >
-                Subnet Info
+                dApp Settings
               </Typography>
               <Box component="form" width={"600px"} sx={{mt: 3}}>
                   {Object.keys(clientInfo).map((i: any, v: any) => {
@@ -224,6 +244,51 @@ export default function Settings(props: any) {
                 </Grid>
 
               </Box>
+              <Typography component="h1" variant="h5" textAlign={"left"} marginTop={"2em"} >
+                On-Chain Data
+              </Typography>
+              <Grid container spacing={2} style={{paddingBottom: "30px", paddingTop: "20px"}}>
+                <Grid item xs={6} >
+                  <p style={{textAlign: "left", margin: 0}}>
+                      Payment Period:
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "right", margin: 0}}>
+                      {period}
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "left", margin: 0}}>
+                    Users:
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "right", margin: 0}}>
+                      {users}
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "left", margin: 0}}>
+                    Cost Per User:
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "right", margin: 0}}>
+                      ${Web3.utils.fromWei(cost.toString(), 'ether')}
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "left", margin: 0}}>
+                    Is Current:
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <p style={{textAlign: "right", margin: 0}}>
+                      {isCurrent.toString()}
+                  </p>
+                </Grid>
+              </Grid>
             </div>
             }
 
