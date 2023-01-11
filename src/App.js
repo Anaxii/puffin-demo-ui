@@ -208,7 +208,6 @@ function App() {
                     </div>
                 }
 
-                {showLoadingModal && <LoadingModal/>}
                 <Copyright sx={{mt: 5}}/>
 
             </Web3Context.Provider>

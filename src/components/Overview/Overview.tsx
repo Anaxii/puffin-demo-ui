@@ -1,74 +1,57 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ACCOUNT_URL, CLIENT_URL} from "../../constants/Global";
 import Grid from "@mui/material/Grid";
 import {AddNetwork} from "../../util/AddNetwork";
 import Button from "@mui/material/Button";
 import {toast} from "react-toastify";
+import Typography from "@mui/material/Typography";
+import LoadingModal from "../LoadingModal/LoadingModal";
+import {InfinitySpin} from "react-loader-spinner";
+import {Web3Context} from "../../helpers/context";
 
 export default function Overview(props: any){
-    const [clients, setClients] = useState({})
-    const [clientUsers, setClientUsers] = useState({})
 
-    const getClients = async () => {
-        return new Promise<any>((ok: any) => {
-            const requestOptions = {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'},
-            };
-            fetch(ACCOUNT_URL + '/client/all?wallet=' + props.account, requestOptions)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    setClients(data.clients)
-                    setClientUsers(data.user_clients)
-                    ok()
-                }).catch((err: any) => {
-                console.log(err)
-                ok()
-            });
-        })
-    }
-
-    const joinNetwork = async (id: any) => {
-        const requestOptions = {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-        };
-        let status = new Promise(async (ok: any, reject: any) => {
-            fetch(ACCOUNT_URL + '/client/join?wallet=' + props.account + "&id=" + id, requestOptions)
-                .then(response => response.json())
-                .then(async () => {
-                    await getClients()
-                    ok()
-                }).catch((err: any) => {
-                console.log(err)
-                reject()
-                return false
-            });
-        })
-        await toast.promise(
-            status,
-            {
-                success: 'Successfully joined/left client',
-                pending: 'Waiting for join/leave confirmation',
-                error: 'Failed to join/leave client'
-            }
-        )
-    }
+    const web3Context: any = useContext(Web3Context);
 
     useEffect(() => {
-        if (Object.keys(clients).length == 0)
-            getClients()
+        console.log(props)
+        if (Object.keys(props.clients).length == 0)
+            props.getClients()
     }, [])
+
     return (
         <div>
-            {Object.keys(clients).map((index: any, val: any) => {
+            <Typography component="h1" variant="h5">
+                User Settings
+            </Typography>
+            <div style={{paddingTop: "20px"}}/>
+            {props.showLoadingModal ? <div style={{marginLeft: "auto", marginRight: "auto", marginBottom: 0}}>
+              <InfinitySpin
+                color="#E55021"
+              />
+            </div>
+            :
+            <div style={{paddingBottom: "20px"}}>
+                <Grid container spacing={2} style={{paddingBottom: "5px"}}>
+                    <Grid item xs={6}>
+                        <p style={{textAlign: "left", margin: 0}}>
+                            Account:
+                        </p>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <p style={{textAlign: "right", margin: 0}}>
+                            {web3Context.account.slice(0, 7)}...{web3Context.account.slice(web3Context.account.length - 8, web3Context.account.length-1)}
+                        </p>
+                    </Grid>
+                </Grid>
+            </div>}
+            {Object.keys(props.clients).map((index: any, val: any) => {
                 // @ts-ignore
-                let id = clients[index]
+                let id = props.clients[index]
                 // @ts-ignore
-                let hasJoined = clientUsers[id]
+                let hasJoined = props.clientUsers[id]
                 return (
-                    <div style={{width: "400px", paddingBottom: "20px"}}>
+                    <div style={{width: "400px", paddingBottom: "20px"}} key={id}>
                         <Grid container spacing={2}>
                             <Grid item xs={8}>
                                 <p style={{margin: "auto", textAlign: "left"}}>
@@ -82,7 +65,7 @@ export default function Overview(props: any){
                                     variant="contained"
                                     sx={{mt: 3, mb: 2}}
                                     style={{backgroundColor: "#E55021", margin: "auto"}}
-                                    onClick={() => joinNetwork(id)}
+                                    onClick={() => props.joinNetwork(id)}
                                 >
                                     {hasJoined ? "Leave" : "Join"}
                                 </Button>

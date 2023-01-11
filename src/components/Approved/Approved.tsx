@@ -19,6 +19,8 @@ import SubnetSetup from "../SubnetSetup/SubnetSetup";
 import Settings from "../Settings/Settings";
 import Map from "../Map/Map";
 import Overview from "../Overview/Overview"
+import {ACCOUNT_URL} from "../../constants/Global";
+import {toast} from "react-toastify";
 
 const theme = createTheme();
 
@@ -26,7 +28,9 @@ export default function Approved(props: any) {
 
     const [web3Modal, setWeb3Modal] = useState(null)
     const [selected, setSelected] = useState("Overview")
-
+    const [clients, setClients] = useState({})
+    const [clientUsers, setClientUsers] = useState({})
+    const [showLoadingModal, setShowLoadingModal] = useState(true)
 
     async function connectWallet() {
         // @ts-ignore
@@ -36,6 +40,54 @@ export default function Approved(props: any) {
             props.setWeb3(await new Web3(provider))
             props.setProvider(provider)
         }
+    }
+
+    const getClients = async () => {
+        return new Promise<any>((ok: any) => {
+            const requestOptions = {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+            };
+            fetch(ACCOUNT_URL + '/client/all?wallet=' + props.account, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setShowLoadingModal(false)
+                    setClients(data.clients)
+                    setClientUsers(data.user_clients)
+                    ok()
+                }).catch((err: any) => {
+                console.log(err)
+                ok()
+            });
+        })
+    }
+
+    const joinNetwork = async (id: any) => {
+        const requestOptions = {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        };
+        let status = new Promise(async (ok: any, reject: any) => {
+            fetch(ACCOUNT_URL + '/client/join?wallet=' + props.account + "&id=" + id, requestOptions)
+                .then(response => response.json())
+                .then(async () => {
+                    await getClients()
+                    ok()
+                }).catch((err: any) => {
+                console.log(err)
+                reject()
+                return false
+            });
+        })
+        await toast.promise(
+            status,
+            {
+                success: 'Successfully joined/left client',
+                pending: 'Waiting for join/leave confirmation',
+                error: 'Failed to join/leave client'
+            }
+        )
     }
 
     return (
@@ -145,22 +197,22 @@ export default function Approved(props: any) {
                     <div className={"color-primary"}
                          style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={3}>
+                            <Grid item xs={4}>
                                 <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Overview")
                                    }}>
-                                    Users
+                                    User Settings
                                 </p>
                             </Grid>
-                            <Grid item xs={3}>
-                                <p style={{cursor: "pointer", color: selected == "Map" ? "#E55021" : "black"}}
-                                   onClick={() => {
-                                       setSelected("Map")
-                                   }}>
-                                    Map
-                                </p>
-                            </Grid>
+                            {/*<Grid item xs={3}>*/}
+                            {/*    <p style={{cursor: "pointer", color: selected == "Map" ? "#E55021" : "black"}}*/}
+                            {/*       onClick={() => {*/}
+                            {/*           setSelected("Map")*/}
+                            {/*       }}>*/}
+                            {/*        Map*/}
+                            {/*    </p>*/}
+                            {/*</Grid>*/}
                             {/*{props.status != "sub" &&*/}
                             {/*<Grid item xs={2}>*/}
                             {/*  <p style={{cursor: "pointer", color: selected == "Sub-Accounts" ? "#E55021" : "black"}}*/}
@@ -171,19 +223,7 @@ export default function Approved(props: any) {
                             {/*  </p>*/}
                             {/*</Grid>*/}
                             {/*}*/}
-                            <Grid item xs={3}>
-                                <p style={{
-                                    cursor: "pointer",
-                                    color: selected == "Integrate Puffin" ? "#E55021" : "black"
-                                }}
-                                   onClick={() => {
-                                       setSelected("Integrate Puffin")
-                                   }}
-                                >
-                                    Setup
-                                </p>
-                            </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={4}>
                                 <p style={{cursor: "pointer", color: selected == "Settings" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Settings")
@@ -192,7 +232,17 @@ export default function Approved(props: any) {
                                     Developer Settings
                                 </p>
                             </Grid>
-                            <Grid item xs={(props.status != "sub" ? 1 : 0)}>
+                            <Grid item xs={4}>
+                                <p style={{
+                                    cursor: "pointer",
+                                    color: selected == "Integrate Puffin" ? "#E55021" : "black"
+                                }}
+                                   onClick={() => {
+                                       setSelected("Integrate Puffin")
+                                   }}
+                                >
+                                    dApp Setup
+                                </p>
                             </Grid>
                         </Grid>
                     </div>
@@ -240,7 +290,8 @@ export default function Approved(props: any) {
                     </div>
                     }
                     {selected == "Overview" && <div>
-                        <Overview account={props.account} balances={props.balances}/>
+                      <Overview account={props.account} balances={props.balances} clients={clients} setClients={setClients} showLoadingModal={showLoadingModal}
+                                clientUsers={clientUsers} setClientUsers={setClientUsers} getClients={getClients} joinNetwork={joinNetwork}/>
                     </div>
                     }
                     {selected == "Transactions" && <div>
@@ -261,33 +312,33 @@ export default function Approved(props: any) {
                     <div style={{margin: "2.5%"}}/>
                     {selected != "Integrate Puffin" && selected != "Settings" && selected != "Transactions" &&
                     <div>
-                        {props.account}
-                        <Grid container spacing={2}>
-                            <Grid item xs={6}>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{mt: 3, mb: 2}}
-                                    style={{backgroundColor: "#E55021"}}
-                                    onClick={() => AddNetwork("pfn")}
-                                >
-                                    Connect to PFN
-                                </Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={{mt: 3, mb: 2}}
-                                    style={{backgroundColor: "#E55021"}}
-                                    onClick={() => AddNetwork("fuji")}
-                                >
-                                    Connect to Fuji
-                                </Button>
-                            </Grid>
-                        </Grid>
+                        {/*{props.account}*/}
+                        {/*<Grid container spacing={2}>*/}
+                        {/*    <Grid item xs={6}>*/}
+                        {/*        <Button*/}
+                        {/*            type="submit"*/}
+                        {/*            fullWidth*/}
+                        {/*            variant="contained"*/}
+                        {/*            sx={{mt: 3, mb: 2}}*/}
+                        {/*            style={{backgroundColor: "#E55021"}}*/}
+                        {/*            onClick={() => AddNetwork("pfn")}*/}
+                        {/*        >*/}
+                        {/*            Connect to PFN*/}
+                        {/*        </Button>*/}
+                        {/*    </Grid>*/}
+                        {/*    <Grid item xs={6}>*/}
+                        {/*        <Button*/}
+                        {/*            type="submit"*/}
+                        {/*            fullWidth*/}
+                        {/*            variant="contained"*/}
+                        {/*            sx={{mt: 3, mb: 2}}*/}
+                        {/*            style={{backgroundColor: "#E55021"}}*/}
+                        {/*            onClick={() => AddNetwork("fuji")}*/}
+                        {/*        >*/}
+                        {/*            Connect to Fuji*/}
+                        {/*        </Button>*/}
+                        {/*    </Grid>*/}
+                        {/*</Grid>*/}
                     </div>}
 
                 </Box>

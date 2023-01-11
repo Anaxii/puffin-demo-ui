@@ -16,7 +16,7 @@ export default function SubnetInfo(props: any) {
     return (
         <div>
             <Typography component="h1" variant="h5">
-                Subnet Info
+                dApp Info
             </Typography>
             <Box component="form" sx={{mt: 3}}>
                 <Grid container spacing={2}>

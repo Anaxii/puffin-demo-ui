@@ -13,7 +13,7 @@ export default function TeamInfo(props: any) {
     return (
         <div>
             <Typography component="h1" variant="h5">
-                Subnet Info
+                dApp Team Info
             </Typography>
             <Box component="form" sx={{mt: 3}}>
                 <Grid container spacing={2}>
