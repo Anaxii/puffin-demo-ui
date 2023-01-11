@@ -27,8 +27,19 @@ export default function DappStatus(props: any){
             fetch(CLIENT_URL + '/client/status?id=' + id, requestOptions)
                 .then(response => response.json())
                 .then(data => {
+
                     if (data.status)
-                        alert(data.status)
+                        toast(data.status, {
+                            position: "top-center",
+                            autoClose: 4000,
+                            progressStyle: {
+                                color: "black",
+                            },
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            theme: "colored",
+                        });
                 }).catch((err: any) => {
                 return false
             });
