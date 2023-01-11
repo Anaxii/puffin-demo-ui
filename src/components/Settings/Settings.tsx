@@ -33,7 +33,6 @@ export default function Settings(props: any) {
             .then(data => {
                 setClientInfo(data)
                 for (let i = 0; i < data.package_options.length; i ++) {
-                    console.log(data.package_options[i])
                     if (data.package_options[i] == "kyc")
                         setKYC(true)
                     if (data.package_options[i] == "geo_block")

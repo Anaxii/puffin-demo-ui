@@ -10,20 +10,23 @@ export default function Overview(props: any){
     const [clientUsers, setClientUsers] = useState({})
 
     const getClients = async () => {
-        const requestOptions = {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-        };
-        fetch(ACCOUNT_URL + '/client/all?wallet=' + props.account, requestOptions)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                setClients(data.clients)
-                setClientUsers(data.user_clients)
-            }).catch((err: any) => {
-            console.log(err)
-            return false
-        });
+        return new Promise<any>((ok: any) => {
+            const requestOptions = {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'},
+            };
+            fetch(ACCOUNT_URL + '/client/all?wallet=' + props.account, requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setClients(data.clients)
+                    setClientUsers(data.user_clients)
+                    ok()
+                }).catch((err: any) => {
+                console.log(err)
+                ok()
+            });
+        })
     }
 
     const joinNetwork = async (id: any) => {
@@ -34,10 +37,9 @@ export default function Overview(props: any){
         let status = new Promise(async (ok: any, reject: any) => {
             fetch(ACCOUNT_URL + '/client/join?wallet=' + props.account + "&id=" + id, requestOptions)
                 .then(response => response.json())
-                .then(data => {
-                    console.log(data)
+                .then(async () => {
+                    await getClients()
                     ok()
-                    getClients()
                 }).catch((err: any) => {
                 console.log(err)
                 reject()
