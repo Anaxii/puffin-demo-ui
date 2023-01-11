@@ -18,17 +18,17 @@ import logo from "../../assets/logo.png";
 import SubnetSetup from "../SubnetSetup/SubnetSetup";
 import Settings from "../Settings/Settings";
 import Map from "../Map/Map";
+import Overview from "../Overview/Overview"
 
 const theme = createTheme();
 
 export default function Approved(props: any) {
 
     const [web3Modal, setWeb3Modal] = useState(null)
-    const [selected, setSelected] = useState("Integrate Puffin")
+    const [selected, setSelected] = useState("Overview")
 
 
     async function connectWallet() {
-        console.log(props.status)
         // @ts-ignore
         const provider = await web3Modal.connect();
         if (provider) {
@@ -150,11 +150,11 @@ export default function Approved(props: any) {
                                    onClick={() => {
                                        setSelected("Overview")
                                    }}>
-                                    Overview
+                                    Users
                                 </p>
                             </Grid>
                             <Grid item xs={3}>
-                                <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
+                                <p style={{cursor: "pointer", color: selected == "Map" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Map")
                                    }}>
@@ -189,7 +189,7 @@ export default function Approved(props: any) {
                                        setSelected("Settings")
                                    }}
                                 >
-                                    Settings
+                                    Developer Settings
                                 </p>
                             </Grid>
                             <Grid item xs={(props.status != "sub" ? 1 : 0)}>
@@ -233,10 +233,14 @@ export default function Approved(props: any) {
                     </div>
                     }
                     {selected == "Sub-Accounts" && <div>
-                        <Typography component="h1" variant="h5">
-                            Sub-Accounts
-                        </Typography>
-                        <SubAccountRequest account={props.account} balances={props.balances}/>
+                      <Typography component="h1" variant="h5">
+                        Sub-Accounts
+                      </Typography>
+                      <SubAccountRequest account={props.account} balances={props.balances}/>
+                    </div>
+                    }
+                    {selected == "Overview" && <div>
+                        <Overview account={props.account} balances={props.balances}/>
                     </div>
                     }
                     {selected == "Transactions" && <div>
