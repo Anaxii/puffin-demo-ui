@@ -21,6 +21,7 @@ import Map from "../Map/Map";
 import Overview from "../Overview/Overview"
 import {ACCOUNT_URL} from "../../constants/Global";
 import {toast} from "react-toastify";
+import DappStatus from "../DappStatus/DappStatus";
 
 const theme = createTheme();
 
@@ -197,14 +198,6 @@ export default function Approved(props: any) {
                     <div className={"color-primary"}
                          style={{margin: "auto", color: "black", textAlign: "center", "width": "100%"}}>
                         <Grid container spacing={2}>
-                            <Grid item xs={4}>
-                                <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
-                                   onClick={() => {
-                                       setSelected("Overview")
-                                   }}>
-                                    User Settings
-                                </p>
-                            </Grid>
                             {/*<Grid item xs={3}>*/}
                             {/*    <p style={{cursor: "pointer", color: selected == "Map" ? "#E55021" : "black"}}*/}
                             {/*       onClick={() => {*/}
@@ -223,7 +216,15 @@ export default function Approved(props: any) {
                             {/*  </p>*/}
                             {/*</Grid>*/}
                             {/*}*/}
-                            <Grid item xs={4}>
+                            <Grid item xs={3}>
+                                <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
+                                   onClick={() => {
+                                       setSelected("Overview")
+                                   }}>
+                                    User Settings
+                                </p>
+                            </Grid>
+                            <Grid item xs={3}>
                                 <p style={{cursor: "pointer", color: selected == "Settings" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Settings")
@@ -232,7 +233,7 @@ export default function Approved(props: any) {
                                     Developer Settings
                                 </p>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={3}>
                                 <p style={{
                                     cursor: "pointer",
                                     color: selected == "Integrate Puffin" ? "#E55021" : "black"
@@ -242,6 +243,15 @@ export default function Approved(props: any) {
                                    }}
                                 >
                                     dApp Setup
+                                </p>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <p style={{cursor: "pointer", color: selected == "dapp status" ? "#E55021" : "black"}}
+                                   onClick={() => {
+                                       setSelected("dapp status")
+                                   }}
+                                >
+                                    dApp Status
                                 </p>
                             </Grid>
                         </Grid>
@@ -275,11 +285,11 @@ export default function Approved(props: any) {
                 >
 
                     {selected == "Bridge" && <div>
-                        <Typography component="h1" variant="h5">
-                            Puffin Bridge
-                        </Typography>
-                        <Bridge account={props.account} balances={props.balances}/>
-                        <WrapAvax account={props.account} balances={props.balances}/>
+                      <Typography component="h1" variant="h5">
+                        Puffin Bridge
+                      </Typography>
+                      <Bridge account={props.account} balances={props.balances}/>
+                      <WrapAvax account={props.account} balances={props.balances}/>
                     </div>
                     }
                     {selected == "Sub-Accounts" && <div>
@@ -289,22 +299,28 @@ export default function Approved(props: any) {
                       <SubAccountRequest account={props.account} balances={props.balances}/>
                     </div>
                     }
+                    {selected == "dapp status" && <div>
+                      <DappStatus/>
+                    </div>
+                    }
                     {selected == "Overview" && <div>
-                      <Overview account={props.account} balances={props.balances} clients={clients} setClients={setClients} showLoadingModal={showLoadingModal}
-                                clientUsers={clientUsers} setClientUsers={setClientUsers} getClients={getClients} joinNetwork={joinNetwork}/>
+                      <Overview account={props.account} balances={props.balances} clients={clients}
+                                setClients={setClients} showLoadingModal={showLoadingModal}
+                                clientUsers={clientUsers} setClientUsers={setClientUsers} getClients={getClients}
+                                joinNetwork={joinNetwork}/>
                     </div>
                     }
                     {selected == "Transactions" && <div>
-                        <Typography component="h1" variant="h5">
-                            Bridge Transactions
-                        </Typography>
-                        <Transactions account={props.account} balances={props.balances} name={props.name}/>
+                      <Typography component="h1" variant="h5">
+                        Bridge Transactions
+                      </Typography>
+                      <Transactions account={props.account} balances={props.balances} name={props.name}/>
                     </div>}
                     {selected == "Integrate Puffin" && <div>
-                        <SubnetSetup account={props.account} balances={props.balances} name={props.name}/>
+                      <SubnetSetup account={props.account} balances={props.balances} name={props.name}/>
                     </div>}
                     {selected == "Settings" && <div>
-                        <Settings account={props.account} balances={props.balances} name={props.name}/>
+                      <Settings account={props.account} balances={props.balances} name={props.name}/>
                     </div>}
                     {selected == "Map" && <div>
                       <Map account={props.account} balances={props.balances} name={props.name}/>

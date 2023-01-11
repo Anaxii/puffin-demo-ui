@@ -27,7 +27,7 @@ export default function SubnetSetup(props: any) {
 
     const [level, setLevel] = useState("flex")
     const [chainId, setChainId] = useState(0)
-
+    const [requestId, setRequestId] = useState("")
     const [bridge, setBridge] = useState(false)
     const [geo, setGeo] = useState(false)
     const [aml, setAML] = useState(false)
@@ -90,10 +90,12 @@ export default function SubnetSetup(props: any) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(c)
         };
+        let id = ""
         let status = new Promise(async (ok: any, reject: any) => {
             fetch(CLIENT_URL + '/client/new', requestOptions)
                 .then(response => response.json())
                 .then(data => {
+                    setRequestId(data.id)
                     ok()
                     console.log(data)
                 }).catch((err: any) => {
@@ -105,7 +107,7 @@ export default function SubnetSetup(props: any) {
         await toast.promise(
             status,
             {
-                success: 'Verification successful, we will contact you within 2 business days',
+                success: `Verification request sent successful`,
                 pending: 'Verifying your information',
                 error: 'Verification failed'
             }
@@ -149,6 +151,7 @@ export default function SubnetSetup(props: any) {
                 {step == 5 &&
                 <Verify updateClientInfo={updateClientInfo} clientInfo={clientInfo} level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
                         geo={geo} aml={aml} bridge={bridge} kyc={kyc} users={users} rpcURL={rpcURL} name={name}/>}
+                {requestId != "" && <p>Request ID: {requestId}</p>}
                 <Step updateClientInfo={updateClientInfo} clientInfo={clientInfo} setStep={setStep} step={step} isExpanded={isExpanded} setExpanded={setExpanded}
                       sendVerify={sendVerify}/>
             </Box>
