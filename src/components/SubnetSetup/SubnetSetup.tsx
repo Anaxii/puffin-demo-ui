@@ -2,7 +2,7 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import SubnetInfo from "./SubnetInfo/SubnetInfo";
 import Step from "./Step/Step";
@@ -14,10 +14,12 @@ import SetOwner from "./SetOwner/SetOwner";
 import EnableWallet from "./EnableWallet/EnableWallet";
 import SendTokens from "./SendTokens/SendTokens";
 import {CLIENT_URL} from "../../constants/Global";
+import {Web3Context} from "../../helpers/context";
 
 const theme = createTheme();
 
 export default function SubnetSetup(props: any) {
+    const web3Context: any = useContext(Web3Context);
 
     const [name, setName] = useState("PFN")
     const [rpcURL, setRpcURL] = useState("https://node.thepuffin.network/ext/bc/273dwzFtrR6JQzLncTAbN5RBtiqdysVfKTJKBvYHhtUHBnrYWe/rpc")
@@ -55,8 +57,7 @@ export default function SubnetSetup(props: any) {
         "puffin_kyc_address": "",
         "puffin_client_address": "",
         "admin_wallet_address": "",
-        "blocked_countries": {
-        }
+        "status": ""
     })
     useEffect(() => {
         if (bridge && geo && aml && kyc) {
@@ -75,14 +76,37 @@ export default function SubnetSetup(props: any) {
 
     const sendVerify = async () => {
         let features: string[] = []
+        let c = clientInfo
+
         if (kyc)
             features.push("kyc")
-        if (geo)
+        if (geo) {
             features.push("geo")
+        }
 
-        let c = clientInfo
+        if (geo && c.puffin_geo_address == "") {
+            if (c.puffin_kyc_address != "") {
+                c.puffin_geo_address = c.puffin_kyc_address
+                c.puffin_kyc_address = ""
+            }
+        } else if (!geo && c.puffin_kyc_address == "") {
+            if (c.puffin_geo_address != "") {
+                c.puffin_kyc_address = c.puffin_geo_address
+                c.puffin_geo_address = ""
+            }
+        }
+
+
+
         // @ts-ignore
         c.package_options = features
+        c.package = "flex"
+        c.admin_wallet_address = web3Context.account
+        c.vm = "evm"
+        c.team_size = Number(c.team_size)
+        c.chain_id = Number(c.chain_id)
+        c.max_users = Number(c.max_users)
+        c.status = "active"
 
         console.log(features, c)
         const requestOptions = {

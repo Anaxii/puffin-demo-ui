@@ -28,7 +28,7 @@ export default function SubnetInfo(props: any) {
                             fullWidth
                             id="project_name"
                             onChange={setValue}
-                            label="Subnet Name"
+                            label="Project/Company Name"
                             autoFocus
                         />
                     </Grid>

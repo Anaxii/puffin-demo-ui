@@ -25,5 +25,5 @@ export async function GetBalances(walletAddress: string) {
     let pfnContract = new pfnWeb3.eth.Contract(ERC20, "0xa61E9ed5E29850a1DCfD357a466D49E1E8eB5fB7");
     let pfnBalance = await pfnContract.methods.balanceOf(walletAddress).call();
 
-    return {avax: BigInt(avaxBal), pfn: BigInt(pfnBal), fuji_wavax: BigInt(wavaxBalance), pfn_wavax: BigInt(pfnBalance)}
+    return {avax: BigInt(avaxBal), fuji_wavax: BigInt(wavaxBalance)}
 }

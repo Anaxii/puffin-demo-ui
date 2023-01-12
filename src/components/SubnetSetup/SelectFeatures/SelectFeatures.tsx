@@ -21,7 +21,7 @@ export default function SelectFeatures(props: any) {
             <Box component="form" sx={{mt: 3}}>
                 <Grid container spacing={2}>
                     <Grid style={{margin: "auto"}} item xs={1}>
-                        <Checkbox checked={props.bridge} onClick={() => {
+                        <Checkbox checked={props.bridge} disabled onClick={() => {
                             props.setBridge(!props.bridge)
                         }}/>
                     </Grid>
@@ -41,7 +41,7 @@ export default function SelectFeatures(props: any) {
                         </p>
                     </Grid>
                     <Grid style={{margin: "auto"}} item xs={1}>
-                        <Checkbox checked={props.aml} onClick={() => {
+                        <Checkbox checked={props.aml} disabled onClick={() => {
                             props.setAML(!props.aml)
                         }}/>
                     </Grid>
@@ -65,9 +65,8 @@ export default function SelectFeatures(props: any) {
                             required
                             fullWidth
                             onChange={setUsers}
-                            value={props.users}
                             id="max_users"
-                            label="Number of Users"
+                            label="Max Number of Users"
                             name="address"
                         />
                     </Grid>

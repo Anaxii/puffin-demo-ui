@@ -55,6 +55,9 @@ export default function SignUp(props: any) {
         const accounts = await window.ethereum.request({method: "eth_requestAccounts"});
         let fname = data.get('firstName')
         let lname = data.get('lastName')
+        let country = data.get("country")
+        let email = data.get('email')
+        let address = data.get('address')
 
         const requestOptions = {
             method: 'POST',
@@ -62,10 +65,10 @@ export default function SignUp(props: any) {
             body: JSON.stringify(
                 {
                     wallet_address: accounts[0],
-                    email: data.get('email'),
-                    physical_address: data.get('address'),
+                    email: email,
+                    physical_address: address,
                     name: fname + " " + lname,
-                    country: data.get('country'),
+                    country: country,
                     signature: {
                         signature_data: {
                             hashed_message: signature.hashedMessage.toString(),

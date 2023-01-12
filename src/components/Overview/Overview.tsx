@@ -40,7 +40,7 @@ export default function Overview(props: any){
                     </Grid>
                     <Grid item xs={6}>
                         <p style={{textAlign: "right", margin: 0}}>
-                            {web3Context.account.slice(0, 7)}...{web3Context.account.slice(web3Context.account.length - 8, web3Context.account.length-1)}
+                            {web3Context.account.slice(0, 7)}...{web3Context.account.slice(web3Context.account.length - 8, web3Context.account.length)}
                         </p>
                     </Grid>
                 </Grid>
