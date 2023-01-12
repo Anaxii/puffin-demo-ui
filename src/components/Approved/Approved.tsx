@@ -231,7 +231,7 @@ export default function Approved(props: any) {
                                        setSelected("Settings")
                                    }}
                                 >
-                                    Developer Settings
+                                    Client Settings
                                 </p>
                             </Grid>
                             <Grid item xs={2}>

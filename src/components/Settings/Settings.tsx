@@ -14,7 +14,6 @@ import Web3 from "web3";
 const theme = createTheme();
 
 export default function Settings(props: any) {
-    const [subAccounts, setSubAccounts]: any = useState({})
     const [_type, _setType] = useState("developer")
     const [clientInfo, setClientInfo] = useState({})
     const [kyc, setKYC] = useState(false)
@@ -23,12 +22,8 @@ export default function Settings(props: any) {
     const [users, setUsers] = useState(0)
     const [cost, setCost] = useState(0)
     const [paymentToken, setPaymentToken] = useState("")
+    const [blockedCountries, setBlockedCountries] = useState({})
     const [isCurrent, setIsCurrent] = useState(false)
-    useEffect(() => {
-        let _subAccounts = localStorage.getItem("subs")
-        if (_subAccounts)
-            setSubAccounts(JSON.parse(_subAccounts))
-    }, [])
 
     const getClients = async () => {
         const requestOptions = {
@@ -38,7 +33,9 @@ export default function Settings(props: any) {
         fetch(CLIENT_URL + '/client?id=1', requestOptions)
             .then(response => response.json())
             .then(async data => {
+                console.log(data)
                 setClientInfo(data)
+                setBlockedCountries(data.blocked_countries)
                 for (let i = 0; i < data.package_options.length; i ++) {
                     if (data.package_options[i] == "kyc")
                         setKYC(true)
@@ -184,10 +181,11 @@ export default function Settings(props: any) {
                       // @ts-ignore
                       let c = clientInfo[i]
                       if (typeof c == "object") {
-
                           return
                       }
                       let l = i.replace(/_/g, " ").replace(/\b\w/g, (l: any) => l.toUpperCase())
+
+
 
                       if (c.length > 15)
                           c = c.slice(0, 15) + "..."
@@ -206,6 +204,32 @@ export default function Settings(props: any) {
                               </Grid>
                           </Grid>
                       )
+                  })}
+                <Typography component="h1" variant="h5" textAlign={"left"} marginTop={"2em"} >
+                  Blocked Countries
+                </Typography>
+                  <div style={{marginTop: "20px"}}/>
+                  {Object.keys(blockedCountries).map((i: any, v: any) => {
+                      for (const i in blockedCountries) {
+                          // @ts-ignore
+                          let countries = blockedCountries[i].toString()
+                          return (
+                              <Grid container spacing={2} style={{paddingBottom: "5px"}}>
+                                      <Grid item xs={2}>
+                                          <p style={{textAlign: "left", margin: 0}}>
+                                              Tier {i}:
+                                          </p>
+                                      </Grid>
+                                      <Grid item xs={10}>
+                                          <p style={{textAlign: "right", margin: 0}}>
+                                              {countries}
+                                          </p>
+                                      </Grid>
+                              </Grid>
+                          )
+                      }
+
+
                   })}
                 <Grid container spacing={2} style={{paddingTop: "25px"}}>
 

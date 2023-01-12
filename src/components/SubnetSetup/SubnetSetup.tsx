@@ -57,7 +57,8 @@ export default function SubnetSetup(props: any) {
         "puffin_kyc_address": "",
         "puffin_client_address": "",
         "admin_wallet_address": "",
-        "status": ""
+        "status": "",
+        "blocked_countries": {1: ["united states", "united kingdom"]}
     })
     useEffect(() => {
         if (bridge && geo && aml && kyc) {
