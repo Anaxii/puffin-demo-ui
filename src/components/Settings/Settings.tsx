@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import {ACCOUNT_URL, CLIENT_URL} from "../../constants/Global";
 import {GetClientInfo} from "../../helpers/Client";
 import Web3 from "web3";
+import TextField from "@mui/material/TextField";
 
 const theme = createTheme();
 
@@ -24,18 +25,20 @@ export default function Settings(props: any) {
     const [paymentToken, setPaymentToken] = useState("")
     const [blockedCountries, setBlockedCountries] = useState({})
     const [isCurrent, setIsCurrent] = useState(false)
+    const [id, setId] = useState("0")
 
     const getClients = async () => {
         const requestOptions = {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         };
-        fetch(CLIENT_URL + '/client?id=1', requestOptions)
+        fetch(CLIENT_URL + '/client?id=' + id, requestOptions)
             .then(response => response.json())
             .then(async data => {
                 console.log(data)
                 setClientInfo(data)
-                setBlockedCountries(data.blocked_countries)
+                if (data.blocked_countries)
+                    setBlockedCountries(data.blocked_countries)
                 for (let i = 0; i < data.package_options.length; i ++) {
                     if (data.package_options[i] == "kyc")
                         setKYC(true)
@@ -61,9 +64,13 @@ export default function Settings(props: any) {
         });
     }
 
-    useEffect(() => {
-            getClients()
-    }, [])
+    const handleChange = (e: any) => {
+        setId(e.target.value)
+    }
+
+    // useEffect(() => {
+    //         getClients()
+    // }, [])
 
     return (
         <ThemeProvider theme={theme}>
@@ -71,6 +78,32 @@ export default function Settings(props: any) {
             <Typography component="h1" variant="h5">
                 Developer Settings
             </Typography>
+            <div style={{width: "300px", margin: "auto", marginTop: "25px", fontSize: "12px"}}>
+                <Grid container spacing={2} style={{paddingBottom: "5px"}}>
+                    <Grid item xs={7}>
+                        <TextField
+                            name="firstName"
+                            required
+                            fullWidth
+                            id="uuid"
+                            label="Client UUID"
+                            onChange={handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={5}>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 1, mb: 1}}
+                            style={{backgroundColor: "#E55021"}}
+                            onClick={() => {getClients()}}
+                        >
+                            Get Info
+                        </Button>
+                    </Grid>
+                </Grid>
+            </div>
+
             {/*<Grid container spacing={2}>*/}
             {/*    <Grid item xs={6}>*/}
             {/*        <Button*/}
@@ -185,8 +218,6 @@ export default function Settings(props: any) {
                       }
                       let l = i.replace(/_/g, " ").replace(/\b\w/g, (l: any) => l.toUpperCase())
 
-
-
                       if (c.length > 15)
                           c = c.slice(0, 15) + "..."
 
@@ -205,26 +236,38 @@ export default function Settings(props: any) {
                           </Grid>
                       )
                   })}
-                <Typography component="h1" variant="h5" textAlign={"left"} marginTop={"2em"} >
-                  Blocked Countries
-                </Typography>
-                  <div style={{marginTop: "20px"}}/>
+                  {Object.keys(blockedCountries).length > 0 && <div>
+                    <Typography component="h1" variant="h5" textAlign={"left"} marginTop={"2em"} >
+                      Blocked Countries
+                    </Typography>
+                    <div style={{marginTop: "20px"}}/>
+                  </div>
+                  }
+
                   {Object.keys(blockedCountries).map((i: any, v: any) => {
                       for (const i in blockedCountries) {
-                          // @ts-ignore
-                          let countries = blockedCountries[i].toString()
+                          let countries: any
+                          try {
+                              // @ts-ignore
+                              if (blockedCountries[i].length > 0) {
+                                  // @ts-ignore
+                                  countries = blockedCountries[i].toString()
+                              }
+                          } catch {
+                              return <div></div>
+                          }
                           return (
                               <Grid container spacing={2} style={{paddingBottom: "5px"}}>
-                                      <Grid item xs={2}>
-                                          <p style={{textAlign: "left", margin: 0}}>
-                                              Tier {i}:
-                                          </p>
-                                      </Grid>
-                                      <Grid item xs={10}>
-                                          <p style={{textAlign: "right", margin: 0}}>
-                                              {countries}
-                                          </p>
-                                      </Grid>
+                                  <Grid item xs={2}>
+                                      <p style={{textAlign: "left", margin: 0}}>
+                                          Tier {i}:
+                                      </p>
+                                  </Grid>
+                                  <Grid item xs={10}>
+                                      <p style={{textAlign: "right", margin: 0}}>
+                                          {countries}
+                                      </p>
+                                  </Grid>
                               </Grid>
                           )
                       }
