@@ -9,7 +9,7 @@ export default function Navigation(props: any) {
         let msg = ""
         Object.keys(props.balances).map((index: any, val: any) => {
             msg += Object.keys(props.balances)[val].toUpperCase().replace("_", " ") + ": " + Number(Web3.utils.fromWei(props.balances[Object.keys(props.balances)[val]].toString(), 'ether')).toLocaleString()
-            if (index != "pfn_wavax") {
+            if (index != "wavax") {
                 msg += " | "
             }
         })

@@ -24,6 +24,7 @@ export default function WrapAvax(props: any) {
 
     const [web3Modal, setWeb3Modal] = useState(null)
     const [amount, setAmount] = useState("0")
+    const [contract, setContract] = useState("")
     const handleSubmit = async () => {
         await AddNetwork("fuji")
 
@@ -35,7 +36,7 @@ export default function WrapAvax(props: any) {
             console.log(props.balances)
             web3Context.web3.eth.sendTransaction({
                 from: props.account,
-                to: "0x1D308089a2D1Ced3f1Ce36B1FcaF815b07217be3",
+                to: contract,
                 value: weiValue
             }).then(() => {
                 web3Context.updateBalances()
@@ -56,7 +57,14 @@ export default function WrapAvax(props: any) {
 
     const handleChange = async (event: any) => {
         event.preventDefault();
-        setAmount(event.target.value.toString())
+        console.log(event.target.id)
+        if (event.target.id == "contract") {
+            setContract(event.target.value.toString())
+
+        } else {
+            setAmount(event.target.value.toString())
+
+        }
     };
 
     useEffect(() => {
@@ -80,6 +88,17 @@ export default function WrapAvax(props: any) {
                 Wrap AVAX
             </p>
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                        name="amount"
+                        type="text"
+                        fullWidth
+                        id="contract"
+                        label="WAVAX Contract Address"
+                        autoFocus
+                        onChange={handleChange}
+                    />
+                </Grid>
                 <Grid item xs={12}>
                     <TextField
                         name="amount"

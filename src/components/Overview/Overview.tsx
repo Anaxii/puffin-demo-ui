@@ -14,9 +14,10 @@ export default function Overview(props: any){
     const web3Context: any = useContext(Web3Context);
 
     useEffect(() => {
-        console.log(props)
-        if (Object.keys(props.clients).length == 0)
+        if (new Date().getTime() - 5000 > props.t) {
+            props.setT(new Date().getTime())
             props.getClients()
+        }
     }, [])
 
     return (

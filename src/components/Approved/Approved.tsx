@@ -32,6 +32,7 @@ export default function Approved(props: any) {
     const [clients, setClients] = useState({})
     const [clientUsers, setClientUsers] = useState({})
     const [showLoadingModal, setShowLoadingModal] = useState(true)
+    const [t, setT] = useState(0)
 
     async function connectWallet() {
         // @ts-ignore
@@ -52,7 +53,6 @@ export default function Approved(props: any) {
             fetch(ACCOUNT_URL + '/client/all?wallet=' + props.account, requestOptions)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
                     setShowLoadingModal(false)
                     setClients(data.clients)
                     setClientUsers(data.user_clients)
@@ -216,7 +216,8 @@ export default function Approved(props: any) {
                             {/*  </p>*/}
                             {/*</Grid>*/}
                             {/*}*/}
-                            <Grid item xs={3}>
+                            <Grid item xs={1}/>
+                            <Grid item xs={2}>
                                 <p style={{cursor: "pointer", color: selected == "Overview" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Overview")
@@ -224,7 +225,7 @@ export default function Approved(props: any) {
                                     User Settings
                                 </p>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={2}>
                                 <p style={{cursor: "pointer", color: selected == "Settings" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("Settings")
@@ -233,7 +234,7 @@ export default function Approved(props: any) {
                                     Developer Settings
                                 </p>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={2}>
                                 <p style={{
                                     cursor: "pointer",
                                     color: selected == "Integrate Puffin" ? "#E55021" : "black"
@@ -245,7 +246,7 @@ export default function Approved(props: any) {
                                     dApp Setup
                                 </p>
                             </Grid>
-                            <Grid item xs={3}>
+                            <Grid item xs={2}>
                                 <p style={{cursor: "pointer", color: selected == "dapp status" ? "#E55021" : "black"}}
                                    onClick={() => {
                                        setSelected("dapp status")
@@ -254,6 +255,16 @@ export default function Approved(props: any) {
                                     dApp Status
                                 </p>
                             </Grid>
+                            <Grid item xs={2}>
+                                <p style={{cursor: "pointer", color: selected == "demo dapp" ? "#E55021" : "black"}}
+                                   onClick={() => {
+                                       setSelected("demo dapp")
+                                   }}
+                                >
+                                    Demo dApp
+                                </p>
+                            </Grid>
+                            <Grid item xs={1}/>
                         </Grid>
                     </div>
                     <div style={{marginLeft: "auto", margin: "auto", marginRight: "0"}}>
@@ -292,6 +303,7 @@ export default function Approved(props: any) {
                       <WrapAvax account={props.account} balances={props.balances}/>
                     </div>
                     }
+                    {selected == "demo dapp" && <WrapAvax account={props.account} balances={props.balances}/>}
                     {selected == "Sub-Accounts" && <div>
                       <Typography component="h1" variant="h5">
                         Sub-Accounts
@@ -307,7 +319,7 @@ export default function Approved(props: any) {
                       <Overview account={props.account} balances={props.balances} clients={clients}
                                 setClients={setClients} showLoadingModal={showLoadingModal}
                                 clientUsers={clientUsers} setClientUsers={setClientUsers} getClients={getClients}
-                                joinNetwork={joinNetwork}/>
+                                t={t} setT={setT} joinNetwork={joinNetwork}/>
                     </div>
                     }
                     {selected == "Transactions" && <div>
