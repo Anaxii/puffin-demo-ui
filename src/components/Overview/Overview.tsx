@@ -56,7 +56,7 @@ export default function Overview(props: any){
                         <Grid container spacing={2}>
                             <Grid item xs={8}>
                                 <p style={{margin: "auto", textAlign: "left"}}>
-                                    {index}
+                                    ID: {id} | {index}
                                 </p>
                             </Grid>
                             <Grid item xs={4}>
