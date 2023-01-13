@@ -61,27 +61,7 @@ export default function Verify(props: any) {
                     </Grid>
                     <Grid item xs={9}>
                         <p style={{textAlign: "right", margin: 0}}>
-                            {props.chainId}
-                        </p>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <p style={{textAlign: "left", margin: 0}}>
-                            RPC URL:
-                        </p>
-                    </Grid>
-                    <Grid item xs={9}>
-                        <p style={{textAlign: "right", margin: 0}}>
-                            ...{parse(props.rpcURL).pathname?.slice(0, 15)}...
-                        </p>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <p style={{textAlign: "left", margin: 0}}>
-                            Subnet Name:
-                        </p>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <p style={{textAlign: "right", margin: 0}}>
-                            {props.name}
+                            {43113}
                         </p>
                     </Grid>
                     <Grid item xs={4}>
@@ -91,17 +71,7 @@ export default function Verify(props: any) {
                     </Grid>
                     <Grid item xs={8}>
                         <p style={{textAlign: "right", margin: 0}}>
-                            Subnet-EVM
-                        </p>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <p style={{textAlign: "left", margin: 0}}>
-                            # of Users:
-                        </p>
-                    </Grid>
-                    <Grid item xs={8}>
-                        <p style={{textAlign: "right", margin: 0}}>
-                            {props.users == "" ? 0 : Number(props.users).toLocaleString()}
+                            EVM
                         </p>
                     </Grid>
                     <Grid item xs={4}>
@@ -111,7 +81,7 @@ export default function Verify(props: any) {
                     </Grid>
                     <Grid item xs={8}>
                         <p style={{textAlign: "right", margin: 0}}>
-                            {props.level}
+                            Flex
                         </p>
                     </Grid>
                     <Grid style={{margin: "auto"}} item xs={1}>
