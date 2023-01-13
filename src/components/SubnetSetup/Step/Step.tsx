@@ -22,7 +22,7 @@ export default function Step(props: any) {
                 </Button>
             </div>
             }
-            {(props.step > 0 && props.step < 5) &&
+            {(props.step > 0 && props.step < 3) &&
             <div>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -62,7 +62,7 @@ export default function Step(props: any) {
 
             </div>
             }
-            {props.step == 5 &&
+            {props.step == 3 &&
             <div>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>

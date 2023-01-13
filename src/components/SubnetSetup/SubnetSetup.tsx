@@ -39,16 +39,16 @@ export default function SubnetSetup(props: any) {
     const [isExpanded, setExpanded] = useState(false)
     const [clientInfo, setClientInfo] = useState({
         "admin_name": "",
-        "project_name": "",
+        "project_name": "Puffin",
         "admin_telegram": "",
         "team_size": 0,
         "project_communication_channel": "",
         "project_website": "",
         "dapp_name": "",
-        "rpc_url": "",
-        "ws_url": "",
-        "gas_token_symbol": "",
-        "chain_id": 0,
+        "rpc_url": "https://api.avax-test.network/ext/bc/C/rpc",
+        "ws_url": "ws://52.35.42.217:9650/ext/bc/C/ws",
+        "gas_token_symbol": "AVAX",
+        "chain_id": 43113,
         "vm": "",
         "package": "",
         "package_options": [],
@@ -76,14 +76,14 @@ export default function SubnetSetup(props: any) {
     }
 
     const sendVerify = async () => {
-        let features: string[] = []
+        let features: string[] = ["kyc", "geo_block"]
         let c = clientInfo
 
-        if (kyc)
-            features.push("kyc")
-        if (geo) {
-            features.push("geo")
-        }
+        // if (kyc)
+        //     features.push("kyc")
+        // if (geo) {
+        //     features.push("geo")
+        // }
 
         if (geo && c.puffin_geo_address == "") {
             if (c.puffin_kyc_address != "") {
@@ -151,17 +151,17 @@ export default function SubnetSetup(props: any) {
                     alignItems: 'center',
                 }}
             >
+                {/*{step == 0 &&*/}
+                {/*<TeamInfo updateClientInfo={updateClientInfo} clientInfo={clientInfo} projectInfo={projectInfo} setProjectInfo={setProjectInfo} setChainId={setChainId}/>}*/}
                 {step == 0 &&
-                <TeamInfo updateClientInfo={updateClientInfo} clientInfo={clientInfo} projectInfo={projectInfo} setProjectInfo={setProjectInfo} setChainId={setChainId}/>}
-                {step == 1 &&
                 <SubnetInfo updateClientInfo={updateClientInfo} clientInfo={clientInfo} projectInfo={projectInfo} setProjectInfo={setProjectInfo} setChainId={setChainId}
                             setRpcURL={setRpcURL} setName={setName}/>}
-                {step == 2 &&
+                {step == 1 &&
                 <SelectFeatures updateClientInfo={updateClientInfo} clientInfo={clientInfo} setLevel={setLevel} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
                                 setBridge={setBridge} setGeo={setGeo} setKYC={setKYC} setAML={setAML}
                                 setUsers={setUsers} users={users}
                                 geo={geo} aml={aml} bridge={bridge} kyc={kyc}/>}
-                {step == 3 &&
+                {step == 2 &&
                 <Deploy updateClientInfo={updateClientInfo} clientInfo={clientInfo} level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
                         isExpanded={isExpanded} setExpanded={setExpanded} geo={geo}/>}
                 {/*{step == 4 &&*/}
@@ -170,10 +170,10 @@ export default function SubnetSetup(props: any) {
                 {/*{step == 4 &&*/}
                 {/*<EnableWallet updateClientInfo={updateClientInfo} clientInfo={clientInfo} level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}*/}
                 {/*              isExpanded={isExpanded} setExpanded={setExpanded}/>}*/}
-                {step == 4 &&
-                <SendTokens updateClientInfo={updateClientInfo} clientInfo={clientInfo} level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
-                            isExpanded={isExpanded} setExpanded={setExpanded}/>}
-                {step == 5 &&
+                {/*{step == 3 &&*/}
+                {/*<SendTokens updateClientInfo={updateClientInfo} clientInfo={clientInfo} level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}*/}
+                {/*            isExpanded={isExpanded} setExpanded={setExpanded}/>}*/}
+                {step == 3 &&
                 <Verify updateClientInfo={updateClientInfo} clientInfo={clientInfo} level={level} chainId={chainId} projectInfo={projectInfo} setProjectInfo={setProjectInfo}
                         geo={geo} aml={aml} bridge={bridge} kyc={kyc} users={users} rpcURL={rpcURL} name={name}/>}
                 {requestId != "" && <p>Request ID: {requestId}</p>}
